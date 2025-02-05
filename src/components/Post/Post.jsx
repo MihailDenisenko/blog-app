@@ -66,7 +66,7 @@ export default function Post({ slug, title, createdAt, description, body, tagLis
         </div>
         <div className={styles.rightSize}>
           <div className={styles.rightSize__author}>{username}</div>
-          <div className={styles.rightSize__date}>{format(createdAt, 'ii/LLL/yyy')}</div>
+          <div className={styles.rightSize__date}>{format(createdAt, 'ii LLL yyy')}</div>
 
           <div className={styles.rightSize__logo}>
             <img className={styles.rightSize__logo} src={image} alt={username} />

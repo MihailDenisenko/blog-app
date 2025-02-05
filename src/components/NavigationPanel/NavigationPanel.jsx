@@ -1,24 +1,29 @@
 import React from 'react'
 import styles from './NavigationPanel.module.scss';
-import userLogo  from '../../assets/image/imgeMale.png'
-import { Link } from 'react-router-dom';
+import userLogo from '../../assets/image/imgeMale.png'
+import logoRW from '../../assets/image/RW.png';
+import { Link, useNavigate } from 'react-router-dom';
 import { setLogOut, setIsLogined } from '../../redux/slice/logined';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 export default function NavigationPanel() {
 
+  const navigate = useNavigate()
   const dispatch = useDispatch()
+    const { isLogined } = useSelector((state) => state.isLogined)
+  
 
 
   return (
     <div className={styles.panel}>
-      <div className={styles.panel__title}>RealWorld Blog</div>
+      <div className={styles.panel__title} onClick={() => navigate('/')}>
+        <img className={styles.panel__title_img} src={logoRW} alt='RealWorld Blog' />
+        RealWorld Blog
+      </div>
       <div className={styles.panel__right}>
         <div className={styles.panel__createArticle}>
-          <Link className={`${styles.panel__a} ${styles.create}`} to='/'>
-            Create article
-          </Link>
+          {isLogined ? <Link className={`${styles.panel__a} ${styles.create}`}>Create article</Link> : ''}
         </div>
 
         <div className={styles.panel__userName}>My name is</div>
@@ -26,7 +31,7 @@ export default function NavigationPanel() {
           <img className={styles.panel__img} onClick={() => dispatch(setIsLogined())} src={userLogo} alt='logo' />
         </div>
         <div className={styles.panel__LogOut}>
-          <Link onClick={() => dispatch(setLogOut())} className={`${styles.panel__a}  ${styles.logOut}`} to='/'>
+          <Link onClick={() => dispatch(setLogOut())} className={`${styles.panel__a}  ${styles.logOut}`}>
             LogOut
           </Link>
         </div>

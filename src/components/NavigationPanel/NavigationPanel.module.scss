@@ -11,6 +11,11 @@
       position: absolute;
       top: 30%;
       left: 25px;
+
+      &_img {
+        width: 50px;
+        margin-right: 15px;
+      }
     }
 
     &__right {
