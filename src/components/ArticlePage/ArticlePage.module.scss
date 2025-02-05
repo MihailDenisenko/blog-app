@@ -12,20 +12,39 @@
   font-family: 'Inter';
   
   &__title {
-    display: block;
+    display: flex;
+    flex-wrap: nowrap;
     position: relative;
     width: 100%;
     height: 50px;
     padding: 5px ;
 
     &_text{
-      position: absolute;
+      padding: 5px 10px 5px 17px;
+      // position: absolute;
       color: blue;
       font-size: 20px;
-      top: 15px;
-      left: 16px;
 
     }
+  }
+}
+
+.likes {
+  width: 45px;
+
+}
+.title__likes {
+  color: red;
+  // height: 45px;
+  // left: 75px;
+  // position: absolute;
+  &_active {
+     color:aqua
+
+  }
+  &_notActive {
+    color: lightgray;
+    width: 25px;
   }
 }
 

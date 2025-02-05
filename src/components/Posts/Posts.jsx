@@ -16,6 +16,7 @@ export default function Posts() {
   React.useEffect(() => {
     axios.get(rootUrl + '/articles').then((resp) => {
       setBlogs(resp.data.articles)
+      console.log(resp.data)
     
     })
   }, [])
