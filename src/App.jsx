@@ -17,8 +17,8 @@ function App() {
       <Routes>
         <Route exact path='/' element={<HomePage />} />
 
-        <Route exact path='/articles' element={<Posts />} />
-        <Route exact path='/articles/:slug' element={<ArticlePage />} />
+        <Route exact path='/articles/' element={<Posts />} />
+        <Route exact path='/articles/:slug/' element={<ArticlePage />} />
         <Route  path='*' element={<ErrorPage />} />
       </Routes>
     </>

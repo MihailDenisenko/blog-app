@@ -15,7 +15,6 @@
       position: absolute;
       top: 0;
       left: 0;
-      // background: rgba(240, 128, 128, 0.3);
       min-width: 75%;
       height: 100%;
     }
@@ -25,7 +24,6 @@
       font-family: 'Inter';
       font-size: 20px;
       display: flex;
-      // background: lightblue;
       width: 100%;
       flex-grow: 4;
       padding-left: 15px;
@@ -77,6 +75,8 @@
         font-size: 10px;
         margin-left: 5px;
         padding: 0  8px;
+        line-height: 18px;
+
         border: 1px solid black;
         border-radius: 2px;
         
