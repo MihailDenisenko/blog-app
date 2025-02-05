@@ -6,10 +6,10 @@ import styles from './Post.module.scss'
 import logoOut from '../../assets/image/imgeMale.png'
 import heart from '../../assets/image/heartLike.png'
 import { HeartOutlined, HeartFilled } from '@ant-design/icons'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
-
+import { setArticle } from '../../redux/slice/articles'
 
 
 
@@ -18,7 +18,7 @@ export default function Post({ slug, title, createdAt, description, body, tagLis
   const [heartOn, setHeartOn] = React.useState(false)
   const [isLoged, setIsLoget] = React.useState(false)
   const { isLogined } = useSelector((state) => state.isLogined)
-
+  const dispatch = useDispatch();
   const naigate = useNavigate()
 
   
@@ -34,9 +34,8 @@ export default function Post({ slug, title, createdAt, description, body, tagLis
   })
 
   const goToArticle = () => {
-    console.log(title)
-    console.log(slug)
-
+    dispatch(setArticle(slug))
+    naigate(`/articles/${slug}`)
    }
 
 

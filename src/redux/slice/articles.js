@@ -10,6 +10,11 @@ const articleSlise = createSlice({
   reducers: {
     setArticle(state, action) {
       state.article = action.payload
+      console.log(state.article)
     }
   }
 })
+
+export const { setArticle } = articleSlise.actions
+
+export default articleSlise.reducer

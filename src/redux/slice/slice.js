@@ -2,7 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  count:0
+  rootUrl: 'https://blog-platform.kata.academy/api',
 }
 
 const newCount = createSlice({
