@@ -33,21 +33,27 @@ export default function Post({ slug, title, createdAt, description, body, tagLis
     )
   })
 
-  
+  const goToArticle = () => {
+    console.log(title)
+    console.log(slug)
+
+   }
+
 
 
   return (
     <div className={styles.div}>
-      <Card
-        onClick={() => {
-          naigate(`${slug}`)
-          console.log(title)
-        }}
-        className={styles.card}
-      >
+      <Card className={styles.card}>
         <div className={styles.leftSize}>
           <div className={styles.title}>
-            <div className={styles.title__text}>{title}</div>
+            <div
+              className={styles.title__text}
+              onClick={() => {
+                goToArticle()
+              }}
+            >
+              {title}
+            </div>
             <div className={styles.title__like}>
               {!isLogined ? (
                 <HeartOutlined className={styles.title__likes_notActive} />
@@ -59,12 +65,29 @@ export default function Post({ slug, title, createdAt, description, body, tagLis
             </div>
           </div>
 
-          <div className={styles.tags}>
+          <div
+            className={styles.tags}
+            onClick={() => {
+              goToArticle()
+            }}
+          >
             <ul className={styles.tags__ul}>{tag}</ul>
           </div>
-          <div className={styles.body}>{body}</div>
+          <div
+            className={styles.body}
+            onClick={() => {
+              goToArticle()
+            }}
+          >
+            {body}
+          </div>
         </div>
-        <div className={styles.rightSize}>
+        <div
+          className={styles.rightSize}
+          onClick={() => {
+            goToArticle()
+          }}
+        >
           <div className={styles.rightSize__author}>{username}</div>
           <div className={styles.rightSize__date}>{format(createdAt, 'ii LLL yyy')}</div>
 

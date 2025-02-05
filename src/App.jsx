@@ -6,7 +6,7 @@ import NavigationPanel from './components/NavigationPanel/NavigationPanel'
 import { Route, Routes } from 'react-router-dom'
 import HomePage from './components/HomePage/HomePage'
 import ArticlePage from './components/ArticlePage/ArticlePage'
-
+import ErrorPage from './components/ErrorPage/ErrorPage'
 
 function App() {
 
@@ -19,6 +19,7 @@ function App() {
 
         <Route exact path='/articles' element={<Posts />} />
         <Route exact path='/articles/:slug' element={<ArticlePage />} />
+        <Route  path='*' element={<ErrorPage />} />
       </Routes>
     </>
   )

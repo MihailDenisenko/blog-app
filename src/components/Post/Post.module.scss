@@ -38,6 +38,10 @@
       &__text {
         color: rgba(24, 144, 255, 1);
         margin-right: 15px;
+        &:hover {
+          text-decoration:underline;
+          cursor: pointer;
+        }
       }
       
       &__likes {
