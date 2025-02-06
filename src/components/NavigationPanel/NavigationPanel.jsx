@@ -27,11 +27,18 @@ export default function NavigationPanel() {
 					{isLogined ? <Link className={`${styles.panel__a} ${styles.create}`}>Написать статью</Link> : ''}
 				</div>
 
-				<div className={styles.panel__userName}>{!isLogined ? `Зарегестрируйтесь или войдите` : 'Михаил'}</div>
+				<div
+					className={styles.panel__userName}
+					onClick={() => {
+						!isLogined ? navigate('/signin') : navigate('/');
+					}}
+				>
+					{!isLogined ? `Зарегестрируйтесь или войдите` : 'Михаил'}
+				</div>
 				<div className={styles.panel__userLogo}>
 					<img
 						className={styles.panel__img}
-						onClick={() => dispatch(setIsLogined())}
+						onClick={() => (isLogined ? navigate('/signup') : navigate('/signin'))}
 						src={isLogined ? petrFirst : userLogo}
 						alt='logo'
 					/>
@@ -43,7 +50,7 @@ export default function NavigationPanel() {
 						</Link>
 					) : (
 						<Link to={'/signin'} className={`${styles.panel__a}  ${styles.logOut}`}>
-							Вход 
+							Вход
 						</Link>
 					)}
 				</div>

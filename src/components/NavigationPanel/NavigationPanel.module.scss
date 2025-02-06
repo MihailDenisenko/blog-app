@@ -35,12 +35,19 @@
       top: 0;
     }
     &__userName{
+
       // color: aquamarine;
       margin-left: 25px;
-      }
+    &:hover {
+      cursor: pointer;
+    }  
+    }
     &__img {
       height: 50px;
       margin-right: 15px;
+      &:hover {
+        cursor: pointer;
+      }
     }
     &__a {
       color:red;
