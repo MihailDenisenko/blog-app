@@ -23,7 +23,7 @@ export default function HomePage() {
 				{!isLogined ? (
 					<Button
 						onClick={() => {
-							dispatch(setIsLogined());
+							navigate('/signin');
 						}}
 						className={styles.HomePage__btn}
 					>

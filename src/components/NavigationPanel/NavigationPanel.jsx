@@ -17,26 +17,37 @@ export default function NavigationPanel() {
 
 
   return (
-    <div className={styles.panel}>
-      <div className={styles.panel__title} onClick={() => navigate('/')}>
-        <img className={styles.panel__title_img} src={logoRW} alt='RealWorld Blog' />
-        RealWorld Blog
-      </div>
-      <div className={styles.panel__right}>
-        <div className={styles.panel__createArticle}>
-          {isLogined ? <Link className={`${styles.panel__a} ${styles.create}`}>Create article</Link> : ''}
-        </div>
+		<div className={styles.panel}>
+			<div className={styles.panel__title} onClick={() => navigate('/')}>
+				<img className={styles.panel__title_img} src={logoRW} alt='RealWorld Blog' />
+				RealWorld Blog
+			</div>
+			<div className={styles.panel__right}>
+				<div className={styles.panel__createArticle}>
+					{isLogined ? <Link className={`${styles.panel__a} ${styles.create}`}>Create article</Link> : ''}
+				</div>
 
-        <div className={styles.panel__userName}>{!isLogined? `Зарегестрируйтесь`:"Михаил"}</div>
-        <div className={styles.panel__userLogo}>
-          <img className={styles.panel__img} onClick={() => dispatch(setIsLogined())} src={isLogined?petrFirst: userLogo} alt='logo' />
-        </div>
-        <div className={styles.panel__LogOut}>
-          <Link onClick={() => dispatch(setLogOut())} className={`${styles.panel__a}  ${styles.logOut}`}>
-            LogOut
-          </Link>
-        </div>
-      </div>
-    </div>
-  )
+				<div className={styles.panel__userName}>{!isLogined ? `Зарегестрируйтесь или войдите` : 'Михаил'}</div>
+				<div className={styles.panel__userLogo}>
+					<img
+						className={styles.panel__img}
+						onClick={() => dispatch(setIsLogined())}
+						src={isLogined ? petrFirst : userLogo}
+						alt='logo'
+					/>
+				</div>
+				<div className={styles.panel__LogOut}>
+					{isLogined ? (
+						<Link onClick={() => dispatch(setLogOut())} className={`${styles.panel__a}  ${styles.logOut}`}>
+							LogOut
+						</Link>
+					) : (
+						<Link to={'/signup'} className={`${styles.panel__a}  ${styles.logOut}`}>
+							Регистрация
+						</Link>
+					)}
+				</div>
+			</div>
+		</div>
+	);
 }
