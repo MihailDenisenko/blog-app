@@ -1,19 +1,20 @@
 import React from 'react';
 import { Button, Checkbox, Form, Input, Modal } from 'antd';
 import { useDispatch } from 'react-redux';
-import { setUserData } from '../../redux/slice/logined';
+import { setUserData, setIsLogined } from '../../redux/slice/logined';
 import { Link, useNavigate } from 'react-router-dom';
 
 const App = () => {
 	
 	const [isModalOpen, setIsModalOpen] = React.useState(false);
-
+	const [checked, setChecked] = React.useState(true)
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const onFinish = (values) => {
 		if (values.username === 'mike' && values.password === '1234') {
 			dispatch(setUserData(values));
 			navigate('/articles');
+			dispatch(setIsLogined(true))
 		} else onFinishFailed('Не верные данные');
 	};
 	const onFinishFailed = (errorInfo) => {
@@ -42,38 +43,38 @@ const App = () => {
 				autoComplete='off'
 			>
 				<Form.Item
-					label='Username'
+					label='Логин'
 					name='username'
 					rules={[
 						{
 							required: true,
-							message: 'Please input your username!',
+							message: 'Введите ваш логин!',
 						},
 					]}
 				>
-					<Input placeholder='Please input your username!' />
+					<Input placeholder='Введите ваш логин!' />
 				</Form.Item>
 
 				<Form.Item
-					label='Password'
+					label='Пароль'
 					name='password'
 					rules={[
 						{
 							required: true,
-							message: 'Please input your password!',
+							message: 'Пожалуйста введите ваш пароль!',
 						},
 					]}
 				>
-					<Input.Password placeholder='Please input your password!' />
+					<Input.Password placeholder='Пожалуйста введите ваш пароль' />
 				</Form.Item>
 
 				<Form.Item name='remember' valuePropName='checked' label={null}>
-					<Checkbox>Remember me</Checkbox>
+					<Checkbox onChange={(e)=>setChecked(e.target.checked)} checked={checked}>Запомнить меня</Checkbox>
 				</Form.Item>
 
 				<Form.Item label={null}>
 					<Button type='primary' htmlType='submit'>
-						Submit
+						Лoгинься
 					</Button>
 				</Form.Item>
 			</Form>
