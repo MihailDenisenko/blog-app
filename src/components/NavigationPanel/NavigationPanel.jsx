@@ -38,12 +38,12 @@ export default function NavigationPanel() {
 				</div>
 				<div className={styles.panel__LogOut}>
 					{isLogined ? (
-						<Link onClick={() => dispatch(setLogOut())} className={`${styles.panel__a}  ${styles.logOut}`}>
+						<Link to='/' onClick={() => dispatch(setLogOut())} className={`${styles.panel__a}  ${styles.logOut}`}>
 							LogOut
 						</Link>
 					) : (
-						<Link to={'/signup'} className={`${styles.panel__a}  ${styles.logOut}`}>
-							Регистрация
+						<Link to={'/signin'} className={`${styles.panel__a}  ${styles.logOut}`}>
+							Вход 
 						</Link>
 					)}
 				</div>
