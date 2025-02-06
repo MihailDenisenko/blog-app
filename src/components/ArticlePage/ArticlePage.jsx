@@ -6,16 +6,25 @@ import { useLocation } from 'react-router-dom';
 import { setArticle } from '../../redux/slice/articles';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import Markdown from 'react-markdown';
-
+import Discr from './atributes/Discr';
+import Body from './atributes/Body';
+import Author from './atributes/Author';
 
 export default function ArticlePage() {
 	const { isLogined } = useSelector((state) => state.isLogined);
 	const { article } = useSelector((state) => state.articles);
 	const { rootUrl } = useSelector((state) => state.newCount);
-		const [heartOn, setHeartOn] = React.useState(false)
-	
+	const [heartOn, setHeartOn] = React.useState(false);
+
 	const [title, setTitle] = React.useState('');
 	const [tags, setTags] = React.useState([]);
+	const [description, setDescription] = React.useState('');
+	const [body, setBody] = React.useState('');
+	const [createdAt, setCreatedAt] = React.useState('');
+	const [favoritesCount, setFavoritesCount] = React.useState('');
+	const [author, setAuthor] = React.useState({});
+	const [following, setFollowing] = React.useState('');
+
 	const params = useLocation();
 	const dispatch = useDispatch();
 
@@ -25,14 +34,23 @@ export default function ArticlePage() {
 		article !== null
 			? axios.get(rootUrl + `/articles/${article}`).then((resp) => {
 					console.log(resp.data.article);
-					const { title, tagList } = resp.data.article;
+					const { title, tagList, description, body, createdAt, favoritesCount, author } = resp.data.article;
+					const { following } = author;
+					setFollowing(following);
 					setTitle(title);
-					setTags(tagList);
+					console.log(tagList.includes(''));
+					if (tagList.length !== 0 && !tagList.includes('')) {
+						setTags(tagList);
+					}
+					setDescription(description);
+					setBody(body);
+					setCreatedAt(createdAt);
+					setFavoritesCount(favoritesCount);
+					setAuthor(author);
 				})
 			: '';
 	}, [article]);
 
-	console.log(params.pathname.replace('articles/', ''));
 	const tag = tags.map((t, i) => {
 		return (
 			<li className={styles.li} key={i}>
@@ -40,22 +58,41 @@ export default function ArticlePage() {
 			</li>
 		);
 	});
+
 	return (
 		<div className={styles.ArticlePage}>
 			<div className={styles.card}>
 				<div className={styles.card__title}>
-					<div className={styles.card__title_text}>{title}</div>
-					<div className={styles.likes}></div>
-					{!isLogined ? (
-													<HeartOutlined className={styles.title__likes_notActive} />
-												) : !heartOn ? (
-													<HeartOutlined onClick={() => setHeartOn(!heartOn)} className={`${styles.title__likes}`} />
-												) : (
-													<HeartFilled className={styles.title__likes_active} onClick={() => setHeartOn(!heartOn)} />
-												)}
+					<div className={styles.card__title_text}>
+						<Markdown>{title}</Markdown>
+					</div>
+					<div className={styles.likes}>
+						{!isLogined ? (
+							<HeartOutlined className={styles.title__likes_notActive} />
+						) : !heartOn ? (
+							<HeartOutlined onClick={() => setHeartOn(!heartOn)} className={`${styles.title__likes}`} />
+						) : (
+							<HeartFilled className={styles.title__likes_active} onClick={() => setHeartOn(!heartOn)} />
+						)}
+						<div className={styles.title__likes_favorites}>{favoritesCount}</div>
+					</div>
 				</div>
-				<div className={styles.card__tags}>
-					<ul className={styles.ul}>{tags.length !== 0 ? tag : ''}</ul>
+
+				{tags.length !== 0 ? (
+					<div className={styles.card__tags}>
+						<ul className={styles.ul}>{tag}</ul>
+					</div>
+				) : (
+					''
+				)}
+				<div className={styles.card__discription}>
+					<Discr description={description} />
+				</div>
+				<div className={styles.card__body}>
+					<Body text={body} />
+				</div>
+				<div className={styles.card__author}>
+					<Author author={author} created={createdAt} />
 				</div>
 			</div>
 		</div>

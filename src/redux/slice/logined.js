@@ -9,7 +9,6 @@ const isLogined = createSlice({
   initialState,
   reducers: {
     setIsLogined(state) {
-      console.log(state.isLogined)
       state.isLogined = true
     },
     setLogOut(state) {

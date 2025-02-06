@@ -49,7 +49,7 @@ export default function Post({ slug, title, createdAt, description, body, tagLis
 						</div>
 						<div className={styles.title__like}>
 							{!isLogined ? (
-								<HeartOutlined className={styles.title__likes_notActive} />
+								<HeartOutlined  className={styles.title__likes_notActive} />
 							) : !heartOn ? (
 								<HeartOutlined onClick={() => setHeartOn(!heartOn)} className={`${styles.title__likes}`} />
 							) : (

@@ -4,6 +4,9 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Post from '../Post/Post'
 import styles from './Posts.module.scss'
+import { setCountBlogs } from '../../redux/slice/slice'
+import PaginPage from '../Pagination/PaginPage'
+
 
 export default function Posts() {
   const { rootUrl } = useSelector((state) => state.newCount)
@@ -11,12 +14,13 @@ export default function Posts() {
   const [blogs, setBlogs] = React.useState([])
 
 
-  const url = 'https://blog-platform.kata.academy/api'
+  const url = 'https://blog-platform.kata.academy/api/articles/'
 
   React.useEffect(() => {
     axios.get(rootUrl + '/articles').then((resp) => {
       setBlogs(resp.data.articles)
       console.log(resp.data)
+      dispatch(setCountBlogs(resp.data.articlesCount));
     
     })
   }, [])
@@ -42,6 +46,7 @@ export default function Posts() {
   return (
     <div>
       <ul className={styles.ul}>{post}</ul>
+      {blogs.length===0?'':<PaginPage />}
     </div>
   )
 }
