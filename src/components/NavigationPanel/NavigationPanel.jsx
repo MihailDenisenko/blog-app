@@ -20,11 +20,11 @@ export default function NavigationPanel() {
 		<div className={styles.panel}>
 			<div className={styles.panel__title} onClick={() => navigate('/')}>
 				<img className={styles.panel__title_img} src={logoRW} alt='RealWorld Blog' />
-				RealWorld Blog
+				Блог реального мира
 			</div>
 			<div className={styles.panel__right}>
 				<div className={styles.panel__createArticle}>
-					{isLogined ? <Link className={`${styles.panel__a} ${styles.create}`}>Create article</Link> : ''}
+					{isLogined ? <Link className={`${styles.panel__a} ${styles.create}`}>Написать статью</Link> : ''}
 				</div>
 
 				<div className={styles.panel__userName}>{!isLogined ? `Зарегестрируйтесь или войдите` : 'Михаил'}</div>
@@ -39,7 +39,7 @@ export default function NavigationPanel() {
 				<div className={styles.panel__LogOut}>
 					{isLogined ? (
 						<Link to='/' onClick={() => dispatch(setLogOut())} className={`${styles.panel__a}  ${styles.logOut}`}>
-							LogOut
+							Выход
 						</Link>
 					) : (
 						<Link to={'/signin'} className={`${styles.panel__a}  ${styles.logOut}`}>
