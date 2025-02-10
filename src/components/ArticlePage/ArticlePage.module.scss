@@ -4,7 +4,8 @@
 .card {
   position: relative;
   width: 938px;
-  height: 457px;
+  height: auto;
+  min-height: 475px;
   background: rgb(255, 255, 255, .8);
   margin: auto;
   margin-top: 50px;
@@ -92,5 +93,25 @@
         }
   }
 
+}
+.btns {
+  position: absolute;
+  top: 125px;
+  right: 25px;
 
+  &_btn {
+    border: 1px solid;
+    &:hover {
+      box-shadow: 2px 2px 4px gray;
+      // -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+
+  &__delet {
+    color: red;
+    margin-right: 15px;
+  }
+  &__edit {
+    color: green  }
 }

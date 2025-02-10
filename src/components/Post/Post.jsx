@@ -36,7 +36,7 @@ export default function Post({ slug, title, createdAt, description, body, tagLis
 
 	return (
 		<div className={styles.div}>
-			<Card className={styles.card}>
+			<Card className={styles.card}  >
 				<div className={styles.leftSize}>
 					<div className={styles.title}>
 						<div

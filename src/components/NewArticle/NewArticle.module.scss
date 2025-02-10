@@ -1,0 +1,68 @@
+@use '../../assets/fonts/Inter/web/fonts.scss';
+
+.createArticle {
+  width: 940px;
+  height: 700px;
+  height: auto;
+  min-height: 650px;
+  border: 1px solid gray;
+  margin: 15px auto;
+  border-radius: 16px;
+  background: #fff;
+  margin-top: 0px;
+ 
+  
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+    margin-right: 25px;
+    position: relative;
+    margin-bottom: 25px;
+  }
+  .slug {
+    position: absolute;
+    left: 5px;
+    top: -25px;
+
+    &__span {
+      margin-left: 8px;
+    }
+  }
+  .p{
+    margin-top: 25px;
+    text-align: center;
+    font-family: 'Inter';
+    font-size: 30px;
+    font-weight: 50;
+
+  }
+
+  label {
+    display: block;
+    padding-left: 15px;
+    margin-top: 15px;
+  }
+  input, textarea {
+    border-radius: 7px;
+    width: 850px;
+    padding-left: 8px;
+    margin-top: 0;
+    margin-left: 15px;
+  }
+  textarea {
+    height: 150px;
+    resize: none;
+  }
+  .tags {
+    margin-right: auto;
+    margin-left: 15px;
+  }
+  .addBton {
+    color: green;
+    border: 1px solid green;
+    margin-top: 10px;
+    padding: 10px 35px;
+    margin-left: 200px;
+  }
+}

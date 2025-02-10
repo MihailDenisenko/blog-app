@@ -1,0 +1,68 @@
+.profilePage {
+  width: 100%;
+  // background: #000;
+  text-align: center;
+}
+
+.profile {
+  position: relative;
+  width: 400px;
+  height: 500px;
+  margin: 35px auto;
+  border: 1px solid gray;
+  box-shadow: 4px px 15px rgb(177, 177, 177);
+  &:hover {box-shadow: 2px 2px 15px gray;}
+  border-radius: 16px; 
+
+  form {
+    // display: flex;
+    flex-wrap: wrap;
+    // align-items: end;
+    // justify-content: end;
+    margin-right: 30px;
+    
+    .submit {
+      width: 150px;
+      margin-top: 25px;
+      border-radius: 10px;
+      align-self: flex-end;
+      justify-self: end;
+      margin-left: 55px;
+      background: rgb(59, 176, 215);
+      margin-right: auto;
+      transition: box-shadow .5s ease;
+      &:hover {
+        box-shadow: 2px 2px 6px gray;
+      }
+    }
+  }
+
+  input {
+    right: 0;
+    margin: 8px;
+    margin-right: 0;
+    align-self: flex-end;
+    padding: 1px 8px;
+    width: 350px;
+    margin-left: -15px;
+    margin-top: 0px;
+  }
+  label {
+    margin-left: 10px;
+    display: block;
+    padding-left: 25px;
+    text-align: start;
+    position: relative;
+    margin-bottom: 0;
+    .eye {
+      position: absolute;
+      top: 29px;
+      right: 10px;
+    }
+  }
+  &__title {
+    display: block;
+    margin-top: 25px;
+    height: 45px
+  }
+}

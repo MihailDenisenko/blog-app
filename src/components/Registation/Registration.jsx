@@ -8,7 +8,7 @@ export default function Registration() {
 	const [firstName, setFirstName] = React.useState('');
 	const [firstPass, setFirstPass] = React.useState('');
 	const [secondPass, setSecondPass] = React.useState('');
-	const [email, setEmail] = React.useState('')
+	const [email, setEmail] = React.useState('');
 
 	const {
 		register,
@@ -41,14 +41,21 @@ export default function Registration() {
 								message: 'Минимум 5 символов',
 							},
 							maxLength: {
-								value: 21,
+								value: 20,
 								message: 'Максимум 20 символов',
 							},
 						})}
 						onChange={(e) => setFirstName(e.target.value)}
 						value={firstName}
 					/>
-					{firstName !== '' ? <CloseOutlined onClick={() => setFirstName('')} style={{top:'21px', right:'18px', position:'absolute'}} /> : ''}
+					{firstName !== '' ? (
+						<CloseOutlined
+							onClick={() => setFirstName('')}
+							style={{ top: '21px', right: '18px', position: 'absolute' }}
+						/>
+					) : (
+						''
+					)}
 				</label>
 				<div style={{ color: 'red' }}>
 					{errors?.firstName && (
@@ -71,6 +78,10 @@ export default function Registration() {
 										value: 6,
 										message: 'Минимум 6 символов',
 									},
+									maxLength: {
+										value: 40,
+										message: 'Максимум 40 символов',
+									},
 								})}
 								onChange={(e) => {
 									setFirstPass(e.target.value);
@@ -88,6 +99,10 @@ export default function Registration() {
 									minLength: {
 										value: 6,
 										message: 'Минимум 6 символов',
+									},
+									maxLength: {
+										value: 40,
+										message: 'Максимум 40 символов',
 									},
 								})}
 								onChange={(e) => setFirstPass(e.target.value)}
@@ -132,7 +147,7 @@ export default function Registration() {
 					''
 				)}
 				<label>
-					Ваш e-mail
+					Ваш e-mail *
 					<input
 						type='email'
 						placeholder='Введите e-mail'
@@ -154,14 +169,13 @@ export default function Registration() {
 				</div>
 
 				<label>
-					{' '}
 					Ваш пол
 					<select {...register('gender')} style={{ width: '150px' }}>
 						<option value='female'>female</option>
 						<option value='male'>male</option>
 					</select>
 				</label>
-
+				<label >* - поле обязательно	к заполнению</label>
 				<input type='submit' className={styles.submit} />
 			</form>
 		</div>

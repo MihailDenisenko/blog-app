@@ -24,13 +24,19 @@ export default function NavigationPanel() {
 			</div>
 			<div className={styles.panel__right}>
 				<div className={styles.panel__createArticle}>
-					{isLogined ? <Link className={`${styles.panel__a} ${styles.create}`}>Написать статью</Link> : ''}
+					{isLogined ? (
+						<Link to='/new-article' className={`${styles.panel__a} ${styles.create}`}>
+							Написать статью
+						</Link>
+					) : (
+						''
+					)}
 				</div>
 
 				<div
 					className={styles.panel__userName}
 					onClick={() => {
-						!isLogined ? navigate('/signin') : navigate('/');
+						isLogined ? navigate('/profile') : navigate('/signin');
 					}}
 				>
 					{!isLogined ? `Зарегестрируйтесь или войдите` : 'Михаил'}
@@ -38,7 +44,7 @@ export default function NavigationPanel() {
 				<div className={styles.panel__userLogo}>
 					<img
 						className={styles.panel__img}
-						onClick={() => (isLogined ? navigate('/signup') : navigate('/signin'))}
+						onClick={() => (isLogined ? navigate('/profile') : navigate('/signin'))}
 						src={isLogined ? petrFirst : userLogo}
 						alt='logo'
 					/>

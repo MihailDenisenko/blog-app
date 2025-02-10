@@ -1,8 +1,37 @@
 body {
   box-sizing: border-box;
+  padding-bottom: 55px;
 }
+// html { height: 100%; }
 
-h1 {
-  color: red;
+// body { 
+//   background: #333; 
+//   text-align: center;
+//   min-height: 100%;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
+
+
+
+.h1 {
+  text-align: center;
   
+  background: linear-gradient(to right, #FFF 20%, #FF0 40%, #FF0 60%, #FFF 80%);
+  // background: linear-gradient( to left, #ff0000c6 20%, #2500ab 55%, #ff0000c6 80%);
+  background-size: 200% auto;
+
+
+  color: #000;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+  animation: shine 2s linear infinite;
+
+  @keyframes shine {
+    to {
+      background-position: 200%;
+    }
+  }
 }

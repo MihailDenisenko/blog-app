@@ -14,7 +14,7 @@ export default function Posts() {
   const [blogs, setBlogs] = React.useState([])
 
 
-  const url = 'https://blog-platform.kata.academy/api/articles/'
+  // const url = 'https://blog-platform.kata.academy/api/articles/'
 
   React.useEffect(() => {
     axios.get(rootUrl + '/articles').then((resp) => {

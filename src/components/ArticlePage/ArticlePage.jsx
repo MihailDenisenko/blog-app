@@ -4,11 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { setArticle } from '../../redux/slice/articles';
-import { HeartOutlined, HeartFilled } from '@ant-design/icons';
+import { HeartOutlined, HeartFilled, ExclamationCircleFilled } from '@ant-design/icons';
 import Markdown from 'react-markdown';
 import Discr from './atributes/Discr';
 import Body from './atributes/Body';
 import Author from './atributes/Author';
+import { Modal } from 'antd';
+
+
+
+
 
 export default function ArticlePage() {
 	const { isLogined } = useSelector((state) => state.isLogined);
@@ -29,6 +34,9 @@ export default function ArticlePage() {
 	const dispatch = useDispatch();
 
 	article === null ? dispatch(setArticle(params.pathname.replace('articles/', ''))) : '';
+
+
+
 
 	React.useEffect(() => {
 		article !== null
@@ -94,6 +102,19 @@ export default function ArticlePage() {
 				<div className={styles.card__author}>
 					<Author author={author} created={createdAt} />
 				</div>
+
+				{isLogined ? (
+					<div className={styles.btns}>
+						<button onClick={() => {console.log('delete')}} className={`${styles.btns__delet} ${styles.btns_btn}`}>
+							Удалить пост
+						</button>
+						<button onClick={() => {console.log('edit')}} className={`${styles.btns__edit} ${styles.btns_btn}`}>
+							Редактировать Пост
+						</button>
+					</div>
+				) : (
+					''
+				)}
 			</div>
 		</div>
 	);
