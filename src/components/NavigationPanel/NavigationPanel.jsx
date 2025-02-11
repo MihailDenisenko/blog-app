@@ -51,7 +51,10 @@ export default function NavigationPanel() {
 				</div>
 				<div className={styles.panel__LogOut}>
 					{isLogined ? (
-						<Link to='/' onClick={() => dispatch(setLogOut())} className={`${styles.panel__a}  ${styles.logOut}`}>
+						<Link to='/' onClick={() => {
+							dispatch(setLogOut());
+							localStorage.clear()
+						}} className={`${styles.panel__a}  ${styles.logOut}`}>
 							Выход
 						</Link>
 					) : (

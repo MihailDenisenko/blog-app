@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "host": "vite --host",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
@@ -16,6 +17,7 @@
     "axios": "^1.7.9",
     "data-fns": "^1.1.0",
     "date-fns": "^4.1.0",
+    "gsap": "^3.12.7",
     "limax": "^4.1.0",
     "react": "^18.3.1",
     "react-axios": "^2.0.6",

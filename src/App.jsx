@@ -11,15 +11,43 @@ import SignIn from './components/SignIn/SignIn';
 import Registration from './components/Registation/Registration';
 import Profile from './components/Profile/Profile';
 import NewArticle from './components/NewArticle/NewArticle';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import NoLogined from './components/NoLogined/NoLogined';
+import { setIsLogined } from './redux/slice/logined';
+import React from 'react';
+import axios from 'axios';
+import { constructFrom } from 'date-fns';
+
 
 
 
 function App() {
 	const { isLogined } = useSelector(state => state.isLogined)
-	
-	
+// 	const baseUrl = 'https://blog-platform.kata.academy/api';
+// 	const dispatch = useDispatch();
+// 	const username = 'rrrr';
+// 	const password = 'rrrrrr';
+
+// // profiles / { username };
+
+// 	const email = 'r@r.rr';
+// 	const token =
+// 		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YWIyZjViY2UxOGQwMWIwMDJiNzdjNSIsInVzZXJuYW1lIjoicnJyciIsImV4cCI6MTc0NDQ1NjAyNywiaWF0IjoxNzM5MjcyMDI3fQ.QkU_MFjZwm0yJz58pIm3cnQvOuQT_5PwBuFzYisiUvc';
+
+// 	localStorage.getItem('login') === 'true' ? dispatch(setIsLogined()) : '';
+
+// 	React.useEffect(() => {
+
+// 		fetch(`${baseUrl}/users/login`, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({ user: { username, email, password } }),
+//     }).then(resp=>resp.json()).then(json=>console.log(json))
+// 	 },[])
+
+
 	return (
 		<>
 			<NavigationPanel />
@@ -28,6 +56,8 @@ function App() {
 				<Route exact path='/' element={<HomePage />} />
 
 				<Route exact path='/articles/' element={<Posts />} />
+				<Route exact path='/articles/?offset=:page' element={<Posts />} />
+
 				<Route exact path='/new-article/' element={isLogined ? <NewArticle /> : <NoLogined />} />
 				<Route exact path='/articles/:slug/' element={<ArticlePage />} />
 				<Route exact path='/articles/:slug/edit' element={<ArticlePage />} />

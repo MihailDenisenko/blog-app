@@ -15,6 +15,7 @@ const App = () => {
 			dispatch(setUserData(values));
 			navigate('/articles');
 			dispatch(setIsLogined(true))
+			localStorage.setItem('login', 'true')
 		} else onFinishFailed('Не верные данные');
 	};
 	const onFinishFailed = (errorInfo) => {

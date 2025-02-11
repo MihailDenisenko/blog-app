@@ -3,8 +3,6 @@
 import { Card } from 'antd';
 import React from 'react';
 import styles from './Post.module.scss';
-import logoOut from '../../assets/image/imgeMale.png';
-import heart from '../../assets/image/heartLike.png';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { format } from 'date-fns';

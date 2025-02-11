@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   article: null,
+  articlePage: 1,
+  articlesCount:0,
   tags: ['',]
 }
 
@@ -25,11 +27,17 @@ const articleSlise = createSlice({
     addTag(state, action) {
       state.tags = [...state.tags, '']
       console.log(state.tags)
+    }, 
+    setArticlePage(state, action) {
+      state.articlePage = action.payload
+    },
+    setArticlesCount(state, action) {
+      state.articlesCount = action.payload
     }
 
   }
 })
 
-export const { setArticle, setTagsOfArticles, deleteTag,addTag } = articleSlise.actions
+export const { setArticle, setTagsOfArticles, deleteTag,addTag, setArticlePage, setArticlesCount } = articleSlise.actions
 
 export default articleSlise.reducer
