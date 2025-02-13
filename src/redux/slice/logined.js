@@ -1,9 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
 	isLogined: false,
 	userNickName: null,
-	userPassword: null,
+	userEmail: null,
+	userToken: null,
+	userImage: null,
 };
 
 const isLogined = createSlice({
@@ -17,17 +19,21 @@ const isLogined = createSlice({
 			state.isLogined = false;
 		},
 		setUserData(state, action) {
-			const { username, password } = action.payload;
-      
-      if (username==='Mike' && password ==='1234'){ 
-  			state.userNickName = username;
-        state.userPassword = password;
-        state.isLogined = true
-      }
+			const { username, token, email } = action.payload;
+			console.log(action.payload)
+			state.userEmail = email;
+			state.userNickName = username;
+			state.userToken = token;
+			state.isLogined = true;
+			if (action.payload.image) state.userImage = action.payload.image;
 		},
 	},
+	setUserImage(state, action) {
+		state.userImage = action.payload;
+	},
+	
 });
 
-export const { setIsLogined, setLogOut, setUserData } = isLogined.actions
+export const { setIsLogined, setLogOut, setUserData, setUserImage } = isLogined.actions;
 
-export default isLogined.reducer
+export default isLogined.reducer;

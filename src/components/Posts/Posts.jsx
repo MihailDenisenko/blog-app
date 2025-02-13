@@ -21,6 +21,7 @@ export default function Posts() {
 			setBlogs(resp.data.articles);
 			console.log(resp.data);
 			dispatch(setArticlesCount(resp.data.articlesCount));
+			console.log('aasasas')
 		});
 	}, []);
 
@@ -29,7 +30,6 @@ export default function Posts() {
 			axios.get(rootUrl + `/articles?limit=5&offset=${articlePage}`).then((resp) => {
 				navigate(`/articles/?offset=${articlePage}`);
 				setBlogs(resp.data.articles);
-				console.log(resp.data);
 				dispatch(setArticlesCount(resp.data.articlesCount));
 			});
 		}

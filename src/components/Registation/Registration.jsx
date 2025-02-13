@@ -1,7 +1,12 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import styles from './Registration.module.scss';
 import { useForm } from 'react-hook-form';
 import { EyeOutlined, EyeInvisibleOutlined, CloseOutlined } from '@ant-design/icons';
+import { useSelector, useDispatch } from 'react-redux';
+import { Modal } from 'antd';
+import { setUserData } from '../../redux/slice/logined';
+import { useNavigate } from 'react-router-dom';
 
 export default function Registration() {
 	const [passVisible, setPassVisible] = React.useState(false);
@@ -9,12 +14,17 @@ export default function Registration() {
 	const [firstPass, setFirstPass] = React.useState('');
 	const [secondPass, setSecondPass] = React.useState('');
 	const [email, setEmail] = React.useState('');
+	const [check, setCheck] = React.useState(true);
+	const { rootUrl } = useSelector((state) => state.newCount);
+	const [modal, setModal] = React.useState(false);
+	const [modalText, setModalText] = React.useState('true');
+	const navigate = useNavigate()
+	const dispatch = useDispatch();
 
 	const {
 		register,
 		handleSubmit,
 		reset,
-
 		formState: { errors, isValid },
 	} = useForm({
 		// mode: 'onTouched',
@@ -22,8 +32,43 @@ export default function Registration() {
 	});
 
 	const onSubmit = (data) => {
-		console.log(data);
-		setTimeout(() => reset(), 500);
+		const { firstName: username, firstPass: password, mail: email } = data;
+
+		fetch(`${rootUrl}/users/`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ user: { username, email, password } }),
+		})
+			.then((resp) => resp.json())
+			.then((json) => {
+				if (json?.user) {
+					const { email, token, username } = json.user;
+					localStorage.setItem('jwt', token);
+					dispatch(setUserData(json.user));
+				}
+				if (json.errors.username === 'is already taken.' && json.errors.email === 'is already taken.') {
+					setModalText('Эти имя и email заняты!');
+					setModal(true);
+				} else if (json.errors.username === 'is already taken.') {
+					setModalText('К сожалению имя занято!');
+					setModal(true);
+				} else if (json.errors.email === 'is already taken.') {
+					setModalText('К сожалению email занят!');
+					setModal(true);
+				}
+			})
+			.catch((err) => {
+				// console.dir(err);
+			});
+		navigate('/articles')
+		setTimeout(() => {
+			setFirstName('');
+			setFirstPass('');
+			setSecondPass('');
+			setEmail('');
+		}, 300);
 	};
 
 	return (
@@ -113,13 +158,14 @@ export default function Registration() {
 					)}
 				</label>
 				<div style={{ color: 'red' }}>
-					{errors?.firstName && (
+					{errors?.firstPass && (
 						<p style={{ marginTop: '-20px', marginBottom: '0', marginLeft: '105px' }}>
-							{errors.firstName?.message || 'Errors'}
+							{errors.firstPass?.message || 'Errors'}
 						</p>
 					)}
 				</div>
 				{!passVisible ? (
+					// Повтор пароля
 					<label>
 						Повтор пароля *
 						<input
@@ -146,38 +192,51 @@ export default function Registration() {
 				) : (
 					''
 				)}
+				{/* Email */}
 				<label>
 					Ваш e-mail *
 					<input
 						type='email'
 						placeholder='Введите e-mail'
-						{...register('mail', { required: true })}
+						{...register('mail', { required: 'Укажите валидный email' })}
 						aria-invalid={errors.mail ? 'true' : 'false'}
 						onChange={(e) => {
 							setEmail(e.target.value);
 						}}
 						value={email}
 					/>
-					{errors.mail && <p role='alert'>{errors.mail.message}</p>}
+					{/* {errors.mail && <p role='alert'>{errors.mail.message}</p>} */}
 				</label>
 				<div style={{ color: 'red' }}>
-					{errors?.firstName && (
-						<p style={{ marginTop: '-30px', marginBottom: '0', marginLeft: '85px' }}>
-							{errors.firstName?.message || 'Errors'}
+					{errors?.mail && (
+						<p style={{ marginTop: '-18px', marginBottom: '0', marginLeft: '105px' }}>
+							{errors.mail?.message || 'Errors'}
 						</p>
 					)}
 				</div>
 
 				<label>
-					Ваш пол
-					<select {...register('gender')} style={{ width: '150px' }}>
-						<option value='female'>female</option>
-						<option value='male'>male</option>
-					</select>
+					Согласен на с условиями
+					<input
+						type='checkbox'
+						checked={check}
+						{...register('checkbox', { required: true })}
+						className={!check ? styles.checkError : ''}
+						onChange={() => setCheck(!check)}
+					/>
+					{!check ? <p style={{ color: 'orange', marginTop: '-15px' }}>Не забудьте согласться с условиями</p> : ''}
+					{errors?.checkbox && <p style={{ color: 'red', marginTop: '-20px' }}>Необходимо ваше соглашение</p>}
 				</label>
-				<label >* - поле обязательно	к заполнению</label>
+				<label>* - поле обязательно к заполнению</label>
 				<input type='submit' className={styles.submit} />
 			</form>
+			<Modal
+				className={styles.reactModal}
+				title={modalText}
+				open={modal}
+				footer={false}
+				onCancel={() => setModal(false)}
+			/>
 		</div>
 	);
 }

@@ -21,6 +21,22 @@
     // justify-content: end;
     margin-right: 30px;
     
+    label {
+      position: relative;
+      margin-top: 15px;
+
+      .closed {
+        position: absolute;
+        top: 29px;
+        right: 5px;
+      }
+
+      .pass {
+        padding-bottom: 4px;
+        padding-right: 35px;
+
+      }
+    }
     .submit {
       width: 150px;
       margin-top: 25px;
@@ -46,6 +62,7 @@
     width: 350px;
     margin-left: -15px;
     margin-top: 0px;
+    padding-right: 28px;
   }
   label {
     margin-left: 10px;

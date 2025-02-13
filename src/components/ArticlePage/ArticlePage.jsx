@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './ArticlePage.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { setArticle } from '../../redux/slice/articles';
 import { HeartOutlined, HeartFilled, ExclamationCircleFilled } from '@ant-design/icons';
 import Markdown from 'react-markdown';
@@ -16,11 +16,10 @@ import { Modal } from 'antd';
 
 
 export default function ArticlePage() {
-	const { isLogined } = useSelector((state) => state.isLogined);
+	const { isLogined, userToken, userNickName } = useSelector((state) => state.isLogined);
 	const { article } = useSelector((state) => state.articles);
 	const { rootUrl } = useSelector((state) => state.newCount);
 	const [heartOn, setHeartOn] = React.useState(false);
-
 	const [title, setTitle] = React.useState('');
 	const [tags, setTags] = React.useState([]);
 	const [description, setDescription] = React.useState('');
@@ -29,24 +28,29 @@ export default function ArticlePage() {
 	const [favoritesCount, setFavoritesCount] = React.useState('');
 	const [author, setAuthor] = React.useState({});
 	const [following, setFollowing] = React.useState('');
+	const [isEditor, setIsEditor] = React.useState(false)
 
 	const params = useLocation();
 	const dispatch = useDispatch();
 
 	article === null ? dispatch(setArticle(params.pathname.replace('articles/', ''))) : '';
 
+	
 
-
+	const navigate = useNavigate()
 
 	React.useEffect(() => {
 		article !== null
 			? axios.get(rootUrl + `/articles/${article}`).then((resp) => {
-					console.log(resp.data.article);
+
+				const nickName = resp.data.article.author.username
+				console.log(userNickName, nickName)
+				// console.log( === userNickName);
+				if (nickName === userNickName) {setIsEditor(true);}
 					const { title, tagList, description, body, createdAt, favoritesCount, author } = resp.data.article;
 					const { following } = author;
 					setFollowing(following);
 					setTitle(title);
-					console.log(tagList.includes(''));
 					if (tagList.length !== 0 && !tagList.includes('')) {
 						setTags(tagList);
 					}
@@ -66,6 +70,28 @@ export default function ArticlePage() {
 			</li>
 		);
 	});
+
+	const deletPost = () => {
+		fetch(`${rootUrl}/articles/${article.replace('/', '')}/`, {
+			method: 'DELETE',
+			headers: {
+				Authorization: `Bearer ${userToken}`,
+				'Content-Type': 'application/json',
+			},
+		})
+			.then((resp) => {
+				console.log(resp);
+				return resp.json();
+			})
+			.then((json) => {
+				console.log(json);
+				navigate('/articles');
+			})
+			.catch((e) => console.log(e));
+		navigate('/articles/')
+
+	}
+	console.log(isEditor);
 
 	return (
 		<div className={styles.ArticlePage}>
@@ -103,9 +129,9 @@ export default function ArticlePage() {
 					<Author author={author} created={createdAt} />
 				</div>
 
-				{isLogined ? (
+				{isEditor ? (
 					<div className={styles.btns}>
-						<button onClick={() => {console.log('delete')}} className={`${styles.btns__delet} ${styles.btns_btn}`}>
+						<button onClick={() => deletPost()} className={`${styles.btns__delet} ${styles.btns_btn}`}>
 							Удалить пост
 						</button>
 						<button onClick={() => {console.log('edit')}} className={`${styles.btns__edit} ${styles.btns_btn}`}>

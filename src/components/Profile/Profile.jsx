@@ -4,27 +4,21 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { EyeOutlined, EyeInvisibleOutlined, CloseOutlined } from '@ant-design/icons';
 import axios from 'axios';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { setUserData, setUserImage } from '../../redux/slice/logined';
+import { da } from 'date-fns/locale';
 
 export default function Profile() {
 	const [firstName, setFirstName] = React.useState('');
+	const [firstNameError, setFirstNameError] = React.useState(false);
 	const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [passwordShow, setPasswordShow] = React.useState(true);
+	const [password, setPassword] = React.useState('');
+	const [passwordShow, setPasswordShow] = React.useState(true);
 	const [avatarUrl, setAvatarUrl] = React.useState('');
-  
-
-  // const url = 'https://blog-platform.kata.academy//api/users';
-  // React.useEffect(() => { 
-  //   axios
-	// 		.get(url, {
-	// 			user: {
-	// 				email: 'string',
-	// 				password: 'string',
-	// 			},
-	// 		})
-	// 		.then((resp) => console.log(resp));
-  // },[])
+	const [errorAvatar, setErrorAvatar] = React.useState(false);
+	const { rootUrl } = useSelector((state) => state.newCount);
+	const { userToken } = useSelector((state) => state.isLogined);
+	const dispatch = useDispatch();
 
 	const {
 		register,
@@ -34,8 +28,41 @@ export default function Profile() {
 	} = useForm();
 
 	const onSubmit = (data) => {
-    reset()
-    console.log(data);
+		const { username, password, email, avatar } = data;
+		const user = {};
+		if (!/^(http||https)?:[//]/.test(avatar) && avatar !== '') {
+			setErrorAvatar(true);
+			return;
+		}
+		if (data.username !== '') user.username = username;
+		if (data.email !== '') user.email = email;
+		if (data.password !== '') user.password = password;
+		if (/^(http||https)?:[//]/.test(avatar)) user.image = avatar;
+
+		axios
+			.put(
+				`${rootUrl}/user`,
+				{ user },
+				{
+					headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${userToken}` },
+				},
+			)
+			.then((resp) => {
+				const { data } = resp;
+				dispatch(setUserData(data.user));
+				setTimeout(() => {
+					setFirstName('')
+					setEmail('')
+					setPassword('')
+					setAvatarUrl('')
+					setFirstNameError(false)
+				}, 300)
+			})
+			.catch((er) => {
+				console.log(JSON.parse(er.request.responseText).errors.username)
+				// if 'is invalid'
+				setFirstNameError(true)
+			});
 	};
 
 	return (
@@ -47,20 +74,27 @@ export default function Profile() {
 					<label>
 						Имя
 						<input
-							{...register('firstName', {
-								required: true,
+							{...register('username', {
 								minLength: {
 									value: 3,
-									message: 'Минимум 3 символов',
+									message: 'Минимум 3 символa',
 								},
 								maxLength: {
 									value: 20,
+									message: 'Максимум 20 символов',
 								},
 							})}
 							placeholder='Введите имя'
 							onChange={(e) => setFirstName(e.target.value)}
 							value={firstName}
 						/>
+						{firstName !== '' ? <CloseOutlined onClick={() => setFirstName('')} className={styles.closed} /> : ''}
+						{errors?.firstName && (
+							<p style={{ marginTop: '-10px', marginBottom: '-5px', color: 'red' }}>{errors.firstName?.message}</p>
+						)}
+						{firstNameError && (
+							<p style={{ marginTop: '-10px', marginBottom: '-5px', color: 'red' }}>{'Это имя уже занято'}</p>
+						)}
 					</label>
 
 					{/* email */}
@@ -69,25 +103,27 @@ export default function Profile() {
 						<input
 							type='email'
 							{...register('email', {
-								required: true,
 							})}
 							placeholder='Ваш e-mail'
 							onChange={(e) => setEmail(e.target.value)}
 							value={email}
 						/>
+						{email !== '' ? <CloseOutlined onClick={() => setEmail('')} className={styles.closed} /> : ''}
 					</label>
 					{/* пароль */}
 					<label>
 						Новый пароль
 						{!passwordShow ? (
 							<input
+								className={styles.pass}
 								type='password'
 								{...register('password', {
-									required: true,
 									minLength: {
 										value: 6,
+										message: 'Минимум 6 символов',
 									},
 									maxLength: 40,
+									message: 'Максимум 40 символов',
 								})}
 								onChange={(pas) => setPassword(pas.target.value)}
 								placeholder='Укажите пароль'
@@ -95,12 +131,15 @@ export default function Profile() {
 							/>
 						) : (
 							<input
+								className={styles.pass}
 								{...register('password', {
-									required: true,
+									// required: 'Обязательное поле',
 									minLength: {
 										value: 6,
+										message: 'Минимум 6 символов',
 									},
 									maxLength: 40,
+									message: 'Максимум 40 символов',
 								})}
 								onChange={(pas) => setPassword(pas.target.value)}
 								value={password}
@@ -112,18 +151,24 @@ export default function Profile() {
 						) : (
 							<EyeInvisibleOutlined className={styles.eye} onClick={() => setPasswordShow(false)} />
 						)}
+						{errors?.password && (
+							<p style={{ marginTop: '-10px', marginBottom: '-5px', color: 'red' }}>{errors.password?.message}</p>
+						)}
 					</label>
 					{/* Avatar(URL) */}
 					<label>
 						Аватар (URL)
-							<input
-								{...register('avatar' )}
-								placeholder='Введите URL'
-								onChange={(e) => setAvatarUrl(e.target.value)}
-								value={avatarUrl}
-            />
-          </label>
-          <input type="submit" className={styles.submit} value={'Сохранить'} />
+						<input
+							{...register('avatar')}
+							placeholder='Введите URL'
+							onChange={(e) => setAvatarUrl(e.target.value)}
+							value={avatarUrl}
+							style={{ paddingRight: '25px' }}
+						/>
+						{avatarUrl !== '' ? <CloseOutlined onClick={() => setAvatarUrl('')} className={styles.closed} /> : ''}
+						{errorAvatar && <p style={{ color: 'red', marginTop: '-10px' }}>Вводимое не является адресом</p>}
+					</label>
+					<input type='submit' className={styles.submit} value={'Сохранить'} />
 				</form>
 			</div>
 		</div>

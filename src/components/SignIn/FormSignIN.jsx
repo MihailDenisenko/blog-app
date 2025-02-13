@@ -1,27 +1,45 @@
 import React from 'react';
 import { Button, Checkbox, Form, Input, Modal } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setUserData, setIsLogined } from '../../redux/slice/logined';
 import { Link, useNavigate } from 'react-router-dom';
+import styles from './SignIn.module.scss';
+
+
 
 const App = () => {
-	
+	const { rootUrl } = useSelector((state) => state.newCount);
 	const [isModalOpen, setIsModalOpen] = React.useState(false);
-	const [checked, setChecked] = React.useState(true)
+	const [checked, setChecked] = React.useState(true);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+
+
+
 	const onFinish = (values) => {
-		if (values.username === 'mike' && values.password === '1234') {
-			dispatch(setUserData(values));
-			navigate('/articles');
-			dispatch(setIsLogined(true))
-			localStorage.setItem('login', 'true')
-		} else onFinishFailed('Не верные данные');
+		const {password, email} = values
+		fetch(`${rootUrl}/users/login`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': "application/json",
+			},
+			body: JSON.stringify({ user:{password, email}})
+		}).then(resp => resp.json()).then(json => {
+			if (json?.errors) {
+				const {errors} = json
+				console.log(errors)
+				setIsModalOpen(true)
+			} else {
+				console.log(json);
+				localStorage.setItem('jwt', json.user.token);
+				dispatch(setUserData(json.user))
+				navigate('/articles')
+			}
+		})
 	};
 	const onFinishFailed = (errorInfo) => {
 		setIsModalOpen(true);
 	};
-
 
 	return (
 		<>
@@ -44,16 +62,16 @@ const App = () => {
 				autoComplete='off'
 			>
 				<Form.Item
-					label='Логин'
-					name='username'
+					label='email'
+					name='email'
 					rules={[
 						{
 							required: true,
-							message: 'Введите ваш логин!',
+							message: 'Введите ваш email!',
 						},
 					]}
 				>
-					<Input placeholder='Введите ваш логин!' />
+					<Input placeholder='Введите ваш email!' />
 				</Form.Item>
 
 				<Form.Item
@@ -70,7 +88,9 @@ const App = () => {
 				</Form.Item>
 
 				<Form.Item name='remember' valuePropName='checked' label={null}>
-					<Checkbox onChange={(e)=>setChecked(e.target.checked)} checked={checked}>Запомнить меня</Checkbox>
+					<Checkbox onChange={(e) => setChecked(e.target.checked)} checked={checked}>
+						Запомнить меня
+					</Checkbox>
 				</Form.Item>
 
 				<Form.Item label={null}>
@@ -80,7 +100,7 @@ const App = () => {
 				</Form.Item>
 			</Form>
 			<Modal
-				title='Извините, но попробуйте ввести корректные данные'
+				title='Попробуйте ввести корректные данные'
 				open={isModalOpen}
 				footer={false}
 				closable={false}
@@ -88,6 +108,8 @@ const App = () => {
 				mask={true}
 				onCancel={() => setIsModalOpen(false)}
 				onOk={() => setIsModalOpen(false)}
+				className={styles.modal}
+				titleColor={'rgba(205, 30, 30, 0.88)'}
 			>
 				{/* <p>Извините, но попробуйте ввести корректные данные</p> */}
 			</Modal>

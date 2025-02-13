@@ -1,4 +1,5 @@
-.HomePage {
+.HomePage { 
+  gap: 45px;
   display: block;
   margin: auto;
   margin-top: 55px;
@@ -16,7 +17,7 @@
   }
   &__btn{
       width: 300px;
-      margin-top: 50px;
+      margin-top: 35px;
       &:hover {
         box-shadow: 4px  4px 12px gray;
       }
@@ -24,12 +25,12 @@
 
   &__posts {
     margin: auto;
-    margin-top: 45px;
+    margin-top: 15px;
     
   }
 
   &__toLogin {
-    margin-top: 80px;
+    margin-top: 50px;
     
   }
 }

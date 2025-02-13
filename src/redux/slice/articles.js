@@ -33,11 +33,14 @@ const articleSlise = createSlice({
     },
     setArticlesCount(state, action) {
       state.articlesCount = action.payload
+    },
+    resetTags(state) {
+      state.tags = [''];
     }
 
   }
 })
 
-export const { setArticle, setTagsOfArticles, deleteTag,addTag, setArticlePage, setArticlesCount } = articleSlise.actions
+export const { setArticle, setTagsOfArticles, deleteTag,addTag, setArticlePage, setArticlesCount, resetTags } = articleSlise.actions
 
 export default articleSlise.reducer
