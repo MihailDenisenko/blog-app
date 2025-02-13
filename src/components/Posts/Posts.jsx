@@ -21,7 +21,7 @@ export default function Posts() {
 			setBlogs(resp.data.articles);
 			console.log(resp.data);
 			dispatch(setArticlesCount(resp.data.articlesCount));
-			console.log('aasasas')
+			console.log('первый запуск')
 		});
 	}, []);
 
