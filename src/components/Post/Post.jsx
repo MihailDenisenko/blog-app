@@ -9,8 +9,12 @@ import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import { setArticle } from '../../redux/slice/articles';
 import Markdown from 'react-markdown';
+import { toFavorite } from '../Favorites/Favorite';
 
-export default function Post({ slug, title, createdAt, description, body, tagList, author }) {
+
+export default function Post({ slug, title, createdAt, description, body, tagList, author, favoritesCount, favorited })
+{
+	console.log(favorited)
 	const { image, username } = author;
 	const [heartOn, setHeartOn] = React.useState(false);
 	const [isLoged, setIsLoget] = React.useState(false);
@@ -26,6 +30,7 @@ export default function Post({ slug, title, createdAt, description, body, tagLis
 		);
 	});
 
+	
 	const goToArticle = () => {
 		dispatch(setArticle(slug));
 		naigate(`/articles/${slug}`);
@@ -44,14 +49,17 @@ export default function Post({ slug, title, createdAt, description, body, tagLis
 						>
 							{title}
 						</div>
-						<div className={styles.title__like}>
+						<div style={{position:'relative'}} className={styles.title__like}>
 							{!isLogined ? (
 								<HeartOutlined  className={styles.title__likes_notActive} />
-							) : !heartOn ? (
-								<HeartOutlined onClick={() => setHeartOn(!heartOn)} className={`${styles.title__likes}`} />
+							) : !favorited ? (
+								<HeartOutlined onClick={() => {toFavorite(slug, favorited)}} className={`${styles.title__likes}`} />
 							) : (
-								<HeartFilled className={styles.title__likes_active} onClick={() => setHeartOn(!heartOn)} />
+								<HeartFilled className={styles.title__likes_active} onClick={() => {toFavorite(slug, favorited)}} />
 							)}
+							<div style={{ position: 'absolute', left: "25px", top: '-1px' }}
+								className={isLogined?styles.fovorLog:styles.noFavorLog}
+							>{favoritesCount}</div>
 						</div>
 					</div>
 

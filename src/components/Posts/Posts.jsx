@@ -12,14 +12,27 @@ export default function Posts() {
 	const { rootUrl } = useSelector((state) => state.newCount);
 	const dispatch = useDispatch();
 	const [blogs, setBlogs] = React.useState([]);
-		const { articlePage } = useSelector((state) => state.articles);
-		const navigate = useNavigate();
+	const { articlePage } = useSelector((state) => state.articles);
+	const navigate = useNavigate();
 	const [start, setStart] = React.useState(true);
+	const [token, setToken] = React.useState('');
 
 	React.useEffect(() => {
-		fetch(`https://blog-platform.kata.academy/api/articles?limit=5&offset=${(articlePage - 1)*5}`)
+		if (localStorage.getItem('jwt') !== null) {
+			setToken(localStorage.getItem('jwt'));
+		}
+		fetch(`https://blog-platform.kata.academy/api/articles?limit=5&offset=${(articlePage - 1) * 5}`, {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${token}`,
+				'Content-Type': 'application/json',
+			},
+		})
 			.then((resp) => resp.json())
 			.then((json) => {
+				const counts = json.articles;
+				// console.log(json.articles);
+				counts.map((c) => console.log(c.favoritesCount));
 				dispatch(setArticlesCount(json.articlesCount));
 				setBlogs(json.articles);
 			});
@@ -27,17 +40,26 @@ export default function Posts() {
 
 	React.useEffect(() => {
 		if (start !== true) {
-			axios.get(`${rootUrl}/articles?limit=5&offset=${(articlePage - 1)*5}`).then((resp) => {
-				navigate(`/articles/?offset=${articlePage}`);
-				setBlogs(resp.data.articles);
-				dispatch(setArticlesCount(resp.data.articlesCount));
-			});
+			axios
+				.get(`${rootUrl}/articles?limit=5&offset=${(articlePage - 1) * 5}`, {
+					method: 'GET',
+					headers: {
+						Authorization: `Bearer ${token}`,
+						'Content-Type': 'application/json',
+					},
+				})
+				.then((resp) => {
+					navigate(`/articles/?offset=${articlePage}`);
+					setBlogs(resp.data.articles);
+					dispatch(setArticlesCount(resp.data.articlesCount));
+				});
 		}
 		setStart(false);
-	}, [articlePage]);
+	}, [articlePage, token]);
 
 	const post = blogs.map((p, i) => {
-		const { slug, title, createdAt, description, body, tagList, author } = p;
+		const { slug, title, createdAt, description, body, tagList, author, favoritesCount, favorited } = p;
+		console.log(p);
 
 		return (
 			<li key={i + 1}>
@@ -49,6 +71,8 @@ export default function Posts() {
 					body={body}
 					tagList={tagList}
 					author={author}
+					favoritesCount={favoritesCount}
+					favorited={favorited}
 				/>
 			</li>
 		);

@@ -11,12 +11,16 @@ import { da } from 'date-fns/locale';
 
 export default function Profile() {
 	const [firstName, setFirstName] = React.useState('');
-	const [firstNameError, setFirstNameError] = React.useState(false);
+	
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
 	const [passwordShow, setPasswordShow] = React.useState(true);
 	const [avatarUrl, setAvatarUrl] = React.useState('');
+	
 	const [errorAvatar, setErrorAvatar] = React.useState(false);
+	const [firstNameError, setFirstNameError] = React.useState(false);
+	const [errEmail, setErrEmail] = React.useState('');
+	
 	const { rootUrl } = useSelector((state) => state.newCount);
 	const { userToken } = useSelector((state) => state.isLogined);
 	const dispatch = useDispatch();
@@ -61,7 +65,9 @@ export default function Profile() {
 				navigate('/articles')
 			})
 			.catch((er) => {
-				setFirstNameError(true)
+				const errors = er.response.data.errors;
+				if (errors.username === 'is already taken.') setFirstNameError(true);
+				if (errors.email === 'is invalid') setErrEmail(true);
 			});
 	};
 
@@ -102,13 +108,15 @@ export default function Profile() {
 						Ваш e-mail
 						<input
 							type='email'
-							{...register('email', {
-							})}
+							{...register('email', {})}
 							placeholder='Ваш e-mail'
 							onChange={(e) => setEmail(e.target.value)}
 							value={email}
 						/>
 						{email !== '' ? <CloseOutlined onClick={() => setEmail('')} className={styles.closed} /> : ''}
+						{errEmail && (
+							<p style={{ marginTop: '-10px', marginBottom: '-5px', color: 'red' }}>{'Этот email уже занят'}</p>
+						)}
 					</label>
 					{/* пароль */}
 					<label>
