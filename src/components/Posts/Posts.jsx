@@ -12,22 +12,22 @@ export default function Posts() {
 	const { rootUrl } = useSelector((state) => state.newCount);
 	const dispatch = useDispatch();
 	const [blogs, setBlogs] = React.useState([]);
-	const { articlePage } = useSelector((state) => state.articles);
-	const navigate = useNavigate();
+		const { articlePage } = useSelector((state) => state.articles);
+		const navigate = useNavigate();
 	const [start, setStart] = React.useState(true);
 
 	React.useEffect(() => {
-		axios.get(rootUrl + `/articles?limit=5&offset=${articlePage}`).then((resp) => {
-			setBlogs(resp.data.articles);
-			console.log(resp.data);
-			dispatch(setArticlesCount(resp.data.articlesCount));
-			console.log('первый запуск')
-		});
+		fetch(`https://blog-platform.kata.academy/api/articles?limit=5&offset=${(articlePage - 1)*5}`)
+			.then((resp) => resp.json())
+			.then((json) => {
+				dispatch(setArticlesCount(json.articlesCount));
+				setBlogs(json.articles);
+			});
 	}, []);
 
 	React.useEffect(() => {
 		if (start !== true) {
-			axios.get(rootUrl + `/articles?limit=5&offset=${articlePage}`).then((resp) => {
+			axios.get(`${rootUrl}/articles?limit=5&offset=${(articlePage - 1)*5}`).then((resp) => {
 				navigate(`/articles/?offset=${articlePage}`);
 				setBlogs(resp.data.articles);
 				dispatch(setArticlesCount(resp.data.articlesCount));

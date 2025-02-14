@@ -27,10 +27,8 @@ const App = () => {
 		}).then(resp => resp.json()).then(json => {
 			if (json?.errors) {
 				const {errors} = json
-				console.log(errors)
 				setIsModalOpen(true)
 			} else {
-				console.log(json);
 				localStorage.setItem('jwt', json.user.token);
 				dispatch(setUserData(json.user))
 				navigate('/articles')

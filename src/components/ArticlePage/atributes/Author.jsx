@@ -7,8 +7,6 @@ import { format } from 'date-fns';
 export default function Author({ author, created }) {
 	const { image, username } = author;
 
-  created === '' ? console.log('created') : console.log(created);
-	// console.log(format(created, 'ii LLL yyy'))
 	return (
 		<div className={styles.authorAll}>
 			<div className={styles.authorAll__userName}>{username}</div>

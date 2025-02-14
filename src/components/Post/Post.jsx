@@ -19,7 +19,6 @@ export default function Post({ slug, title, createdAt, description, body, tagLis
 	const naigate = useNavigate();
 
 	const tag = tagList.map((_tag, i) => {
-		// console.log(_tag)
 		return (
 			<li className={styles.li} key={i}>
 				{_tag}

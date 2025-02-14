@@ -60,7 +60,6 @@ export default function Registration() {
 				}
 			})
 			.catch((err) => {
-				// console.dir(err);
 			});
 		navigate('/articles')
 		setTimeout(() => {

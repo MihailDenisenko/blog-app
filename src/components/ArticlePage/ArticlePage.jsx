@@ -11,10 +11,6 @@ import Body from './atributes/Body';
 import Author from './atributes/Author';
 import { Modal } from 'antd';
 
-
-
-
-
 export default function ArticlePage() {
 	const { isLogined, userToken, userNickName } = useSelector((state) => state.isLogined);
 	const { article } = useSelector((state) => state.articles);
@@ -28,25 +24,24 @@ export default function ArticlePage() {
 	const [favoritesCount, setFavoritesCount] = React.useState('');
 	const [author, setAuthor] = React.useState({});
 	const [following, setFollowing] = React.useState('');
-	const [isEditor, setIsEditor] = React.useState(false)
+	const [isEditor, setIsEditor] = React.useState(false);
+	const [modalShow, setModalShow] = React.useState(false);
 
 	const params = useLocation();
 	const dispatch = useDispatch();
 
 	article === null ? dispatch(setArticle(params.pathname.replace('articles/', ''))) : '';
 
-	
 
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	React.useEffect(() => {
 		article !== null
 			? axios.get(rootUrl + `/articles/${article}`).then((resp) => {
-
-				const nickName = resp.data.article.author.username
-				console.log(userNickName, nickName)
-				// console.log( === userNickName);
-				if (nickName === userNickName) {setIsEditor(true);}
+					const nickName = resp.data.article.author.username;
+					if (nickName === userNickName) {
+						setIsEditor(true);
+					}
 					const { title, tagList, description, body, createdAt, favoritesCount, author } = resp.data.article;
 					const { following } = author;
 					setFollowing(following);
@@ -61,7 +56,7 @@ export default function ArticlePage() {
 					setAuthor(author);
 				})
 			: '';
-	}, [article]);
+	}, [article, userNickName]);
 
 	const tag = tags.map((t, i) => {
 		return (
@@ -71,8 +66,8 @@ export default function ArticlePage() {
 		);
 	});
 
-	const deletPost = () => {
-		fetch(`${rootUrl}/articles/${article.replace('/', '')}/`, {
+	async function deletPost() {
+		await fetch(`${rootUrl}/articles/${article.replace('/', '')}/`, {
 			method: 'DELETE',
 			headers: {
 				Authorization: `Bearer ${userToken}`,
@@ -80,18 +75,13 @@ export default function ArticlePage() {
 			},
 		})
 			.then((resp) => {
-				console.log(resp);
+				navigate('/articles');
 				return resp.json();
 			})
 			.then((json) => {
-				console.log(json);
-				navigate('/articles');
 			})
 			.catch((e) => console.log(e));
-		navigate('/articles/')
-
-	}
-	console.log(isEditor);
+	};
 
 	return (
 		<div className={styles.ArticlePage}>
@@ -131,10 +121,25 @@ export default function ArticlePage() {
 
 				{isEditor ? (
 					<div className={styles.btns}>
-						<button onClick={() => deletPost()} className={`${styles.btns__delet} ${styles.btns_btn}`}>
+						<button onClick={() => setModalShow(true)} className={`${styles.btns__delet} ${styles.btns_btn}`}>
 							Удалить пост
 						</button>
-						<button onClick={() => {console.log('edit')}} className={`${styles.btns__edit} ${styles.btns_btn}`}>
+						<Modal
+							open={modalShow}
+							onOk={() => {deletPost()}
+							}
+							onCancel={function () {
+								setModalShow(false);
+							}}
+							destroyOnClose={true}
+							title={'Вы уверены что хотите удалить этот пост?'}
+						/>
+						<button
+							onClick={() => {
+								navigate(`edit/`);
+							}}
+							className={`${styles.btns__edit} ${styles.btns_btn}`}
+						>
 							Редактировать Пост
 						</button>
 					</div>

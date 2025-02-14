@@ -17,6 +17,8 @@ import { setIsLogined, setUserData } from './redux/slice/logined';
 import React from 'react';
 import axios from 'axios';
 import { constructFrom } from 'date-fns';
+import ArticleEdit from './components/ArticleEdit/ArticleEdit';
+
 
 
 function App() {
@@ -53,7 +55,7 @@ function App() {
 
 				<Route exact path='/new-article/' element={isLogined ? <NewArticle /> : <NoLogined />} />
 				<Route exact path='/articles/:slug/' element={<ArticlePage />} />
-				<Route exact path='/articles/:slug/edit' element={<ArticlePage />} />
+				<Route exact path='/articles/:slug/edit' element={<ArticleEdit />} />
 
 				<Route exact path='/signin/' element={<SignIn />} />
 				<Route exact path='/signup/' element={<Registration />} />

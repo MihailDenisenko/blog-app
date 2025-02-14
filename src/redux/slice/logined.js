@@ -20,7 +20,6 @@ const isLogined = createSlice({
 		},
 		setUserData(state, action) {
 			const { username, token, email } = action.payload;
-			console.log(action.payload)
 			state.userEmail = email;
 			state.userNickName = username;
 			state.userToken = token;

@@ -13,7 +13,6 @@ export default function PaginPage() {
 
 	const total = articlesCount / 10;
 
-	
 	return (
 		<div>
 			<Pagination

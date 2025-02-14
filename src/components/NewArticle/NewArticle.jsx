@@ -10,17 +10,16 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import js from '@eslint/js';
 
-
 export default function NewArticle() {
-	const {  userToken } = useSelector(state => state.isLogined)
+	const { userToken } = useSelector((state) => state.isLogined);
 	const { rootUrl } = useSelector((state) => state.newCount);
-	
+
 	const [title, setTitle] = React.useState('');
 	const [short, setShort] = React.useState('');
 	const [tagsNum, setTagsNum] = React.useState(1);
 	const slugi = slug(title, { delimiter: '-' });
 	const { tags } = useSelector((state) => state.articles);
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const {
 		register,
@@ -30,48 +29,41 @@ export default function NewArticle() {
 	} = useForm();
 
 	const removeTag = (tagRem) => {
-		console.log(tagRem);
 		let tagRemove = tags.filter((t, i) => i !== tagRem);
-		console.log(tagRemove);
 		// setTags(tagRemove)
 	};
 
 	const editTags = (text, ind) => {
-		// console.log(text, ind)
 		let newTags = tags;
 		newTags[ind] = text;
-		console.log(newTags);
 		// setTags(newTags)
 	};
 
-	const onSubmit = (data) => {
-
-		const token = localStorage.getItem('jwt')
-		const articlec = {}
+	async function onSubmit(data) {
+		const token = localStorage.getItem('jwt');
+		const articlec = {};
 		const { title, shortDescription, text } = data;
-		// articlec.slugi = slug;
-		if (tags.length > 1 && tags.length !== 0 || tags[0] !== '') articlec.tags = tags;
-		articlec.title = title
+		if ((tags.length > 1 && tags.length !== 0) || tags[0] !== '') articlec.tags = tags;
+		articlec.title = title;
 		const description = shortDescription;
-		const body = text
-		const slug = slugi
-		
-		
-		
-		fetch(`${rootUrl}/articles`, {
+		const body = text;
+		// const slug = slugi
+
+		await fetch(`${rootUrl}/articles`, {
 			method: 'POST',
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({article:{slugi:slug, tags, body, title}})
-		}).then(resp=>resp.json()).then(json=>console.log(json));
-		
-		dispatch(resetTags())
-		return navigate('/articles/')
-
-	
-	};
+			body: JSON.stringify({ article: { tagList: tags, body, title, description  } }),
+		})
+			.then((resp) => resp.json())
+			.then((json) => {
+				dispatch(resetTags());
+				navigate('/articles/');
+			})
+			.catch((e) => console.log(e));
+	}
 
 	const tag = tags.map((t, i) => {
 		return (
@@ -137,7 +129,7 @@ export default function NewArticle() {
 						className={styles.tags__visible}
 					>
 						<div style={{}}>{tag}</div>
-						<button
+						<div
 							className={styles.addBton}
 							type='primary'
 							style={{ marginBottom: '55px', position: 'relative' }}
@@ -146,7 +138,7 @@ export default function NewArticle() {
 							}}
 						>
 							Add
-						</button>
+						</div>
 					</div>
 				</div>
 				<div style={{ position: 'absolute', bottom: '10px', left: '25px' }}>

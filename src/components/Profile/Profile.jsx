@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setUserData, setUserImage } from '../../redux/slice/logined';
 import { da } from 'date-fns/locale';
 
+
 export default function Profile() {
 	const [firstName, setFirstName] = React.useState('');
 	const [firstNameError, setFirstNameError] = React.useState(false);
@@ -19,7 +20,7 @@ export default function Profile() {
 	const { rootUrl } = useSelector((state) => state.newCount);
 	const { userToken } = useSelector((state) => state.isLogined);
 	const dispatch = useDispatch();
-
+	const navigate = useNavigate()
 	const {
 		register,
 		handleSubmit,
@@ -57,10 +58,9 @@ export default function Profile() {
 					setAvatarUrl('')
 					setFirstNameError(false)
 				}, 300)
+				navigate('/articles')
 			})
 			.catch((er) => {
-				console.log(JSON.parse(er.request.responseText).errors.username)
-				// if 'is invalid'
 				setFirstNameError(true)
 			});
 	};
