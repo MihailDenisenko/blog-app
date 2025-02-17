@@ -214,7 +214,7 @@ export default function Registration() {
 				</div>
 
 				<label>
-					Согласен на с условиями
+					Согласен с условиями
 					<input
 						type='checkbox'
 						checked={check}

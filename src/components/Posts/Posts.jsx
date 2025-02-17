@@ -41,6 +41,7 @@ export default function Posts() {
 
 	React.useEffect(() => {
 		if (start !== true) {
+			
 			axios
 				.get(`${rootUrl}/articles?limit=5&offset=${(articlePage - 1) * 5}`, {
 					method: 'GET',
@@ -50,7 +51,7 @@ export default function Posts() {
 					},
 				})
 				.then((resp) => {
-					navigate(`/articles/?offset=${articlePage}`);
+					navigate(`/articles/?offset=${(articlePage) }`);
 					console.log(resp.data.articles);
 					setBlogs(resp.data.articles);
 					dispatch(setArticlesCount(resp.data.articlesCount));
@@ -61,7 +62,6 @@ export default function Posts() {
 
 	const post = blogs.map((p, i) => {
 		const { slug, title, createdAt, description, body, tagList, author, favoritesCount, favorited } = p;
-
 		return (
 			<li key={i + 1}>
 				<Post

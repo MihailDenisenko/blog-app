@@ -14,6 +14,7 @@ const App = () => {
 	const navigate = useNavigate();
 
 	const onFinish = (values) => {
+		console.log(values)
 		const { password, email } = values;
 		fetch(`${rootUrl}/users/login`, {
 			method: 'POST',
@@ -22,7 +23,10 @@ const App = () => {
 			},
 			body: JSON.stringify({ user: { password, email } }),
 		})
-			.then((resp) => resp.json())
+			.then((resp) => {
+				console.log(resp)
+				return resp.json()
+			})
 			.then((json) => {
 				if (json?.errors) {
 					const { errors } = json;

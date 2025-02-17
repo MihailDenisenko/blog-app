@@ -32,6 +32,7 @@ export default function Profile() {
 	} = useForm();
 
 	const onSubmit = (data) => {
+		console.log(data)
 		const { username, password, email, avatar } = data;
 		const user = {};
 		if (!/^(http||https)?:[//]/.test(avatar) && avatar !== '') {
@@ -53,6 +54,7 @@ export default function Profile() {
 			)
 			.then((resp) => {
 				const { data } = resp;
+				console.log(data)
 				dispatch(setUserData(data.user));
 				setTimeout(() => {
 					setFirstName('');

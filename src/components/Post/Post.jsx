@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Card } from 'antd';
 import React from 'react';
@@ -25,12 +24,17 @@ export default function Post({
 	const { image, username } = author;
 	const [isLoged, setIsLoget] = React.useState(false);
 	const { isLogined } = useSelector((state) => state.isLogined);
-
 	const [countFavor, setCountFavor] = React.useState(favoritesCount);
+
+
+	const [favori, setFavori] = React.useState(favorited)
+// console.log(favori, favorited)
+
 	const [onFavor, setOnFavor] = React.useState(favorited);
+
 	const dispatch = useDispatch();
 	const naigate = useNavigate();
-	console.log(onFavor);
+
 	const tag = tagList.map((_tag, i) => {
 		return (
 			<li className={styles.li} key={i}>
@@ -38,14 +42,14 @@ export default function Post({
 			</li>
 		);
 	});
-
+	
 	const goToArticle = () => {
 		dispatch(setArticle(slug));
 		naigate(`/articles/${slug}`);
 	};
 
 	async function toFavor(obj) {
-		console.log(obj);
+		// console.log(obj);
 
 		const a = await toFavorite(obj);
 		if (a.favorite === 'adding') {
@@ -57,6 +61,8 @@ export default function Post({
 			setOnFavor(false);
 		}
 	}
+	React.useEffect(() => { setOnFavor(favorited) },[favorited])
+	// console.log(favorited, favori)
 
 	return (
 		<div className={styles.div}>

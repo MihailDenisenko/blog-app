@@ -53,32 +53,44 @@ export default function ArticlePage() {
 		}
 		setHeartOn(!heartOn);
 	}
+	
 
 	React.useEffect(() => {
+		const token = localStorage.getItem('jwt')
 		article !== null
-			? axios.get(rootUrl + `/articles/${article}`).then((resp) => {
-					const nickName = resp.data.article.author.username;
-					if (nickName === userNickName) {
-						setIsEditor(true);
-					}
-					const { title, tagList, description, body, createdAt, favoritesCount, author, favorited, slug } =
-						resp.data.article;
-					// const { following } = author;
-					// setFollowing(following);
-					setTitle(title);
-					if (tagList.length !== 0 && !tagList.includes('')) {
-						setTags(tagList);
-					}
-					setDescription(description);
-					setBody(body);
-					setCreatedAt(createdAt);
-					setFavoritesCount(favoritesCount);
-					setAuthor(author);
-					setOnFavor(favorited);
-					setSlug(slug);
-				})
+			? axios
+					.get(rootUrl + `/articles/${article}`, {
+						headers: {
+							Authorization: `Bearer ${token}`,
+							'Content-Type': 'application/json',
+						},
+					})
+					.then((resp) => {
+						const nickName = resp.data.article.author.username;
+						if (nickName === userNickName) {
+							setIsEditor(true);
+						}
+						const { title, tagList, description, body, createdAt, favoritesCount, author, favorited, slug } =
+							resp.data.article;
+						// const { following } = author;
+						// setFollowing(following);
+						setTitle(title);
+						if (tagList.length !== 0 && !tagList.includes('')) {
+							setTags(tagList);
+						}
+						setDescription(description);
+						setBody(body);
+						setCreatedAt(createdAt);
+						setFavoritesCount(favoritesCount);
+						setAuthor(author);
+						setOnFavor(favorited);
+						console.log(favorited);
+						setSlug(slug);
+					})
 			: '';
 	}, [article, userNickName]);
+
+	// React.useEffect(() => { setOnFavor(favorited) },[favorited])
 
 	const tag = tags.map((t, i) => {
 		return (
@@ -115,7 +127,7 @@ export default function ArticlePage() {
 					<div className={styles.likes}>
 						{!isLogined ? (
 							<HeartOutlined className={styles.title__likes_notActive} />
-						) : !heartOn ? (
+						) : !onFavor ? (
 							<HeartOutlined
 								onClick={() => {
 									toFavor({ slug, onFavor, favoritesCount });

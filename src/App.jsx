@@ -45,7 +45,7 @@ function App() {
 	return (
 		<>
 			<NavigationPanel />
-			<h1 className={styles.h1}>Здесь могла быть ваша реклама</h1>
+			{/* <h1 className={styles.h1}>Здесь могла быть ваша реклама</h1> */}
 			<Routes>
 				<Route exact path='/' element={<HomePage />} />
 
