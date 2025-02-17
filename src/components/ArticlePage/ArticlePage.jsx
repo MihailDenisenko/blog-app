@@ -10,6 +10,7 @@ import Discr from './atributes/Discr';
 import Body from './atributes/Body';
 import Author from './atributes/Author';
 import { Modal } from 'antd';
+import { toFavorite } from '../Favorites/Favorite';
 
 export default function ArticlePage() {
 	const { isLogined, userToken, userNickName } = useSelector((state) => state.isLogined);
@@ -21,19 +22,37 @@ export default function ArticlePage() {
 	const [description, setDescription] = React.useState('');
 	const [body, setBody] = React.useState('');
 	const [createdAt, setCreatedAt] = React.useState('');
-	const [favoritesCount, setFavoritesCount] = React.useState('');
+	const [favoritesCount, setFavoritesCount] = React.useState(0);
 	const [author, setAuthor] = React.useState({});
 	const [following, setFollowing] = React.useState('');
 	const [isEditor, setIsEditor] = React.useState(false);
 	const [modalShow, setModalShow] = React.useState(false);
+	const [slug, setSlug] = React.useState('');
+
+	const [onFavor, setOnFavor] = React.useState(false);
 
 	const params = useLocation();
 	const dispatch = useDispatch();
 
 	article === null ? dispatch(setArticle(params.pathname.replace('articles/', ''))) : '';
 
-
 	const navigate = useNavigate();
+
+	async function toFavor(obj) {
+		// console.log(obj);
+
+		const a = await toFavorite(obj);
+		if (a.favorite === 'adding') {
+			setFavoritesCount(favoritesCount + 1);
+			setOnFavor(true);
+		}
+		if (a.favorite === 'delete') {
+			setFavoritesCount(favoritesCount - 1);
+			setOnFavor(false);
+
+		}
+		setHeartOn(!heartOn);
+	}
 
 	React.useEffect(() => {
 		article !== null
@@ -42,7 +61,7 @@ export default function ArticlePage() {
 					if (nickName === userNickName) {
 						setIsEditor(true);
 					}
-					const { title, tagList, description, body, createdAt, favoritesCount, author } = resp.data.article;
+					const { title, tagList, description, body, createdAt, favoritesCount, author, favorited, slug } = resp.data.article;
 					const { following } = author;
 					setFollowing(following);
 					setTitle(title);
@@ -54,11 +73,14 @@ export default function ArticlePage() {
 					setCreatedAt(createdAt);
 					setFavoritesCount(favoritesCount);
 					setAuthor(author);
+				setOnFavor(favorited);
+				setSlug(slug)
+				
 				})
 			: '';
 	}, [article, userNickName]);
 
-	const tag = tags.map((t, i) => {
+	const tag = tags.map((t, i) => 	{
 		return (
 			<li className={styles.li} key={i}>
 				{t}
@@ -78,11 +100,9 @@ export default function ArticlePage() {
 				navigate('/articles');
 				return resp.json();
 			})
-			.then((json) => {
-			})
+			.then((json) => {})
 			.catch((e) => console.log(e));
-	};
-
+	}
 	return (
 		<div className={styles.ArticlePage}>
 			<div className={styles.card}>
@@ -94,9 +114,17 @@ export default function ArticlePage() {
 						{!isLogined ? (
 							<HeartOutlined className={styles.title__likes_notActive} />
 						) : !heartOn ? (
-							<HeartOutlined onClick={() => setHeartOn(!heartOn)} className={`${styles.title__likes}`} />
+							<HeartOutlined
+								onClick={() => {
+									toFavor({ slug, onFavor, favoritesCount });
+								}}
+								className={`${styles.title__likes}`}
+							/>
 						) : (
-							<HeartFilled className={styles.title__likes_active} onClick={() => setHeartOn(!heartOn)} />
+							<HeartFilled
+								className={styles.title__likes_active}
+								onClick={() => toFavor({ slug, onFavor, favoritesCount })}
+							/>
 						)}
 						<div className={styles.title__likes_favorites}>{favoritesCount}</div>
 					</div>
@@ -126,8 +154,9 @@ export default function ArticlePage() {
 						</button>
 						<Modal
 							open={modalShow}
-							onOk={() => {deletPost()}
-							}
+							onOk={() => {
+								deletPost();
+							}}
 							onCancel={function () {
 								setModalShow(false);
 							}}

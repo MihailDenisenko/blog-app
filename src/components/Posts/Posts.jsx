@@ -31,8 +31,8 @@ export default function Posts() {
 			.then((resp) => resp.json())
 			.then((json) => {
 				const counts = json.articles;
-				// console.log(json.articles);
-				counts.map((c) => console.log(c.favoritesCount));
+				console.log(json.articles);
+				// counts.map((c) => console.log(c.favoritesCount));
 				dispatch(setArticlesCount(json.articlesCount));
 				setBlogs(json.articles);
 			});
@@ -49,7 +49,9 @@ export default function Posts() {
 					},
 				})
 				.then((resp) => {
+					
 					navigate(`/articles/?offset=${articlePage}`);
+				console.log(resp.data.articles);
 					setBlogs(resp.data.articles);
 					dispatch(setArticlesCount(resp.data.articlesCount));
 				});
@@ -59,7 +61,6 @@ export default function Posts() {
 
 	const post = blogs.map((p, i) => {
 		const { slug, title, createdAt, description, body, tagList, author, favoritesCount, favorited } = p;
-		console.log(p);
 
 		return (
 			<li key={i + 1}>
