@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
+import React from 'react';
 import styles from './Author.module.scss';
 import { format } from 'date-fns';
 
-
 export default function Author({ author, created }) {
 	const { image, username } = author;
+	React.useEffect(() => {}, []);
 
 	return (
 		<div className={styles.authorAll}>

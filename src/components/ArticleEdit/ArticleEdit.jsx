@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import styles from './ArticleEdit.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
@@ -59,14 +61,11 @@ export default function ArticleEdit() {
 		);
 	});
 
-  async function onSubmit(data) {
-    
-    
+	async function onSubmit(data) {
 		const token = localStorage.getItem('jwt');
 		const articlec = {};
-    
 
-    if ((tags.length > 1 && tags.length !== 0) || tags[0] !== '') articlec.tags = tags;
+		if ((tags.length > 1 && tags.length !== 0) || tags[0] !== '') articlec.tags = tags;
 		const description = short;
 		const body = text;
 		if (description === '') setErrShort(true);

@@ -1,147 +1,140 @@
 @use '../../assets/fonts/Inter/web/fonts.scss';
 
-.div{
+.div {
+	.card {
+		display: flex;
+		margin: 15px auto;
+		height: 143px;
+		width: 95%;
+		position: relative;
 
-  .card {
-    display: flex;
-    margin: 15px auto;
-    height: 143px;
-    width: 95%;
-    position: relative;
+		.leftSize {
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			min-width: 75%;
+			height: 100%;
+		}
+	}
 
-    
-    .leftSize {
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      min-width: 75%;
-      height: 100%;
-      
-    }
-  }
-  
-    .title {
-      font-family: 'Inter';
-      font-size: 20px;
-      display: flex;
-      width: 100%;
-      flex-grow: 4;
-      padding-left: 15px;
-      
-      &__text {
-        color: rgba(24, 144, 255, 1);
-        margin-right: 15px;
-        &:hover {
-          text-decoration:underline;
-          cursor: pointer;
-        }
-      }
-      
-      &__likes {
-        position: absolute;
-        width: 15px;
-        color: black;
-        transition: all 2s;
-        top: 5px;
+	.title {
+		font-family: 'Inter';
+		font-size: 20px;
+		display: flex;
+		width: 100%;
+		flex-grow: 4;
+		padding-left: 15px;
 
-        &:hover {
-          transform: scale(1.3);
-          // color:rgb(46, 210, 13)
-        }
-        &_active {
-          width: 15px;
-          transform: scale(1.3);
-          color:red
+		&__text {
+			color: rgba(24, 144, 255, 1);
+			margin-right: 15px;
+			&:hover {
+				text-decoration: underline;
+				cursor: pointer;
+			}
+		}
 
-        }
-        &_notActive {
-          color:gray;
-          width: 15px;
-        }
-      }
+		&__likes {
+			position: absolute;
+			width: 15px;
+			color: black;
+			transition: all 2s;
+			top: 5px;
 
+			&:hover {
+				transform: scale(1.3);
+				// color:rgb(46, 210, 13)
+			}
+			&_active {
+				width: 15px;
+				transform: scale(1.3);
+				color: red;
+			}
+			&_notActive {
+				color: gray;
+				width: 15px;
+			}
+		}
+	}
+	.tags {
+		&__ul {
+			margin: 5px 0;
+			list-style: none;
+			display: flex;
+			align-items: start;
+		}
+		.li {
+			cursor: pointer;
+			font-size: 10px;
+			margin-left: 5px;
+			padding: 0 8px;
+			line-height: 18px;
 
-    }
-    .tags {
+			border: 1px solid black;
+			border-radius: 2px;
 
-      &__ul {
-        margin: 5px 0;
-        list-style: none;
-        display: flex;
-        align-items: start;
-      }
-      .li {
-        cursor: pointer;
-        font-size: 10px;
-        margin-left: 5px;
-        padding: 0  8px;
-        line-height: 18px;
-
-        border: 1px solid black;
-        border-radius: 2px;
-        
-        &:hover {
-          border-color: gray;
-          color: gray;
-        }
-      }
-    }
-    .body {
-      margin-top: 20px;
-      position: absolute;
-      display: block;
-      height: 43px;
-      overflow: hidden;
-      width: 100%;
-      padding-left: 15px;
-      font-size: 12px;
-      font-family: 'Inter' ;
-    }
+			&:hover {
+				border-color: gray;
+				color: gray;
+			}
+		}
+	}
+	.body {
+		margin-top: 20px;
+		position: absolute;
+		display: block;
+		height: 43px;
+		overflow: hidden;
+		width: 100%;
+		padding-left: 15px;
+		font-size: 12px;
+		font-family: 'Inter';
+	}
 }
 
 .rightSize {
-    width: 25%;
-    display: flex;
-    position: absolute;
-    height: 100%;
-    // background: rgba(144, 238, 144, 0.35);
-    top: 0;
-    right: 0px;
+	width: 25%;
+	display: flex;
+	position: absolute;
+	height: 100%;
+	// background: rgba(144, 238, 144, 0.35);
+	top: 0;
+	right: 0px;
 
-    &__logo {
-      position: absolute;
-      top: 15px;
-      right: 5px;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-    }
+	&__logo {
+		position: absolute;
+		top: 15px;
+		right: 5px;
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+	}
 
-    &__author {
-      display: block;
-      margin-left: 15px;
-      font-size: 18px;
-      position: absolute;
-      top: 25px;
-      right: 85px;
-      text-align: center;
-    }
-    &__date {
-      display: block;
-      margin-left: 15px;
-      font-size: 12px;
-      color: rgba(0,0,0, .5);
-      position: absolute;
-      top: 55px;
-      right: 85px;
-    }
-  }
+	&__author {
+		display: block;
+		margin-left: 15px;
+		font-size: 18px;
+		position: absolute;
+		top: 25px;
+		right: 85px;
+		text-align: center;
+	}
+	&__date {
+		display: block;
+		margin-left: 15px;
+		font-size: 12px;
+		color: rgba(0, 0, 0, 0.5);
+		position: absolute;
+		top: 55px;
+		right: 85px;
+	}
+}
 
-  .fovorLog {
-    color: rgb(75, 0, 0);
-  }
-  
-  .noFavorLog {
-    color: gray;
-  }
+.fovorLog {
+	color: rgb(75, 0, 0);
+}
+
+.noFavorLog {
+	color: gray;
+}

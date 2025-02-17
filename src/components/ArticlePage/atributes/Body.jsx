@@ -1,9 +1,11 @@
-import React from 'react'
-import Markdown from 'react-markdown'
+/* eslint-disable react/prop-types */
+import React from 'react';
+import Markdown from 'react-markdown';
 
+export default function Body({ text }) {
+	React.useEffect(() => {}, []);
 
-export default function Body({text}) {
-  return (
+	return (
 		<div>
 			<Markdown>{text}</Markdown>
 		</div>

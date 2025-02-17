@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import styles from './NewArticle.module.scss';
 import { useForm } from 'react-hook-form';
@@ -55,7 +56,7 @@ export default function NewArticle() {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ article: { tagList: tags, body, title, description  } }),
+			body: JSON.stringify({ article: { tagList: tags, body, title, description } }),
 		})
 			.then((resp) => resp.json())
 			.then((json) => {

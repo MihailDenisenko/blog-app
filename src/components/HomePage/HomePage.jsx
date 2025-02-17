@@ -3,9 +3,10 @@ import styles from './HomePage.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsLogined, setLogOut } from '../../redux/slice/logined';
+import { setLogOut } from '../../redux/slice/logined';
 
 export default function HomePage() {
+	React.useEffect(() => {}, []);
 	const navigate = useNavigate();
 	const { isLogined } = useSelector((state) => state.isLogined);
 	const dispatch = useDispatch();
@@ -17,15 +18,7 @@ export default function HomePage() {
 					Посмотреть посты
 				</Button>
 			</div>
-			<div className={styles.HomePage__posts}>
-				{/* {isLogined ? (
-					<Button className={styles.HomePage__btn} onClick={() => navigate('/articles')}>
-						Посмотреть свои посты посты
-					</Button>
-				) : (
-					''
-				)} */}
-			</div>
+			<div className={styles.HomePage__posts}></div>
 			<div className={styles.HomePage__toLogin}>
 				{!isLogined ? (
 					<Button
@@ -50,7 +43,3 @@ export default function HomePage() {
 		</div>
 	);
 }
-
-// onClick={() => {
-//   navigate('/articles')
-// }}

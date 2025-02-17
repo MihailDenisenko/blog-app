@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
 import styles from './PaginPage.module.scss';
@@ -16,7 +17,7 @@ export default function PaginPage() {
 	return (
 		<div>
 			<Pagination
-				defaultCurrent={useLocation().search ? (Number(useLocation().search.replace('?offset=', ''))) : 1}
+				defaultCurrent={useLocation().search ? Number(useLocation().search.replace('?offset=', '')) : 1}
 				align='center'
 				total={articlesCount}
 				// total={countBlogs !== 0 ? countBlogs / 20 : 20}

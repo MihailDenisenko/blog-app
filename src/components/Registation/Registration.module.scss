@@ -1,42 +1,43 @@
 .signUpBlock {
-  border-radius: 16px;
-  position: relative;
-  width: 400px;
-  height: 500px;
-  margin: auto;
-  margin-top: 55px;
-  box-shadow: 2px 2px 8px gray;
-  // text-align: end;
-  padding: 25px;
-  label {
-    position:relative;
-    margin-left: 15x;
-  }
-  input, select {
-    margin: 15px 10px;
-    width: auto;
-  }
+	border-radius: 16px;
+	position: relative;
+	width: 400px;
+	height: 500px;
+	margin: auto;
+	margin-top: 55px;
+	box-shadow: 2px 2px 8px gray;
+	// text-align: end;
+	padding: 25px;
+	label {
+		position: relative;
+		margin-left: 15x;
+	}
+	input,
+	select {
+		margin: 15px 10px;
+		width: auto;
+	}
 }
 
 .eye {
-  position: absolute;
-  top: 22px;
-  right: 15px; 
+	position: absolute;
+	top: 22px;
+	right: 15px;
 }
 
 .errorPass {
-  border: 1px solid red
+	border: 1px solid red;
 }
 .submit {
-  position:absolute;
-  right: 55px;
-  display: block;
-  margin:auto;
-  text-align:center;
-  margin-left:55px
+	position: absolute;
+	right: 55px;
+	display: block;
+	margin: auto;
+	text-align: center;
+	margin-left: 55px;
 }
 .checkError {
-  color:red;
-  border: 1px solid red;
-  box-shadow: 1px 1px 20px red ;
+	color: red;
+	border: 1px solid red;
+	box-shadow: 1px 1px 20px red;
 }

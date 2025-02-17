@@ -18,7 +18,7 @@ export default function Registration() {
 	const { rootUrl } = useSelector((state) => state.newCount);
 	const [modal, setModal] = React.useState(false);
 	const [modalText, setModalText] = React.useState('true');
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
 	const {
@@ -59,9 +59,8 @@ export default function Registration() {
 					setModal(true);
 				}
 			})
-			.catch((err) => {
-			});
-		navigate('/articles')
+			.catch((err) => {});
+		navigate('/articles');
 		setTimeout(() => {
 			setFirstName('');
 			setFirstPass('');

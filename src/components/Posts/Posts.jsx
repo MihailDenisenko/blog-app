@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import axios from 'axios';
 import React from 'react';
@@ -49,9 +50,8 @@ export default function Posts() {
 					},
 				})
 				.then((resp) => {
-					
 					navigate(`/articles/?offset=${articlePage}`);
-				console.log(resp.data.articles);
+					console.log(resp.data.articles);
 					setBlogs(resp.data.articles);
 					dispatch(setArticlesCount(resp.data.articlesCount));
 				});

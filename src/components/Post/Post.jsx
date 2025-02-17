@@ -25,13 +25,12 @@ export default function Post({
 	const { image, username } = author;
 	const [isLoged, setIsLoget] = React.useState(false);
 	const { isLogined } = useSelector((state) => state.isLogined);
-	
-	
+
 	const [countFavor, setCountFavor] = React.useState(favoritesCount);
 	const [onFavor, setOnFavor] = React.useState(favorited);
 	const dispatch = useDispatch();
 	const naigate = useNavigate();
-	console.log(onFavor)
+	console.log(onFavor);
 	const tag = tagList.map((_tag, i) => {
 		return (
 			<li className={styles.li} key={i}>
@@ -47,14 +46,16 @@ export default function Post({
 
 	async function toFavor(obj) {
 		console.log(obj);
-		
+
 		const a = await toFavorite(obj);
 		if (a.favorite === 'adding') {
 			setCountFavor(countFavor + 1);
 			setOnFavor(true);
 		}
-		if (a.favorite === 'delete') {setCountFavor(countFavor - 1); setOnFavor(false)}
-		
+		if (a.favorite === 'delete') {
+			setCountFavor(countFavor - 1);
+			setOnFavor(false);
+		}
 	}
 
 	return (

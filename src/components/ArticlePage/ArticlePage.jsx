@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import styles from './ArticlePage.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { setArticle } from '../../redux/slice/articles';
-import { HeartOutlined, HeartFilled, ExclamationCircleFilled } from '@ant-design/icons';
+import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import Markdown from 'react-markdown';
 import Discr from './atributes/Discr';
 import Body from './atributes/Body';
@@ -24,7 +25,7 @@ export default function ArticlePage() {
 	const [createdAt, setCreatedAt] = React.useState('');
 	const [favoritesCount, setFavoritesCount] = React.useState(0);
 	const [author, setAuthor] = React.useState({});
-	const [following, setFollowing] = React.useState('');
+	// const [following, setFollowing] = React.useState('');
 	const [isEditor, setIsEditor] = React.useState(false);
 	const [modalShow, setModalShow] = React.useState(false);
 	const [slug, setSlug] = React.useState('');
@@ -49,7 +50,6 @@ export default function ArticlePage() {
 		if (a.favorite === 'delete') {
 			setFavoritesCount(favoritesCount - 1);
 			setOnFavor(false);
-
 		}
 		setHeartOn(!heartOn);
 	}
@@ -61,9 +61,10 @@ export default function ArticlePage() {
 					if (nickName === userNickName) {
 						setIsEditor(true);
 					}
-					const { title, tagList, description, body, createdAt, favoritesCount, author, favorited, slug } = resp.data.article;
-					const { following } = author;
-					setFollowing(following);
+					const { title, tagList, description, body, createdAt, favoritesCount, author, favorited, slug } =
+						resp.data.article;
+					// const { following } = author;
+					// setFollowing(following);
 					setTitle(title);
 					if (tagList.length !== 0 && !tagList.includes('')) {
 						setTags(tagList);
@@ -73,14 +74,13 @@ export default function ArticlePage() {
 					setCreatedAt(createdAt);
 					setFavoritesCount(favoritesCount);
 					setAuthor(author);
-				setOnFavor(favorited);
-				setSlug(slug)
-				
+					setOnFavor(favorited);
+					setSlug(slug);
 				})
 			: '';
 	}, [article, userNickName]);
 
-	const tag = tags.map((t, i) => 	{
+	const tag = tags.map((t, i) => {
 		return (
 			<li className={styles.li} key={i}>
 				{t}
@@ -100,7 +100,9 @@ export default function ArticlePage() {
 				navigate('/articles');
 				return resp.json();
 			})
-			.then((json) => {})
+			.then((json) => {
+				json;
+			})
 			.catch((e) => console.log(e));
 	}
 	return (

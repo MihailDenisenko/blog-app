@@ -1,123 +1,120 @@
 @use '../../assets/fonts/Inter/web/fonts.scss';
 
-
 .card {
-  position: relative;
-  width: 938px;
-  height: auto;
-  min-height: 475px;
-  background: rgb(255, 255, 255, .8);
-  margin: auto;
-  margin-top: 50px;
-  border-radius: 15px ;
-  box-shadow: 4px 4px 8px gray;
-  font-family: 'Inter';
-  
-  &__title {
-    display: flex;
-    flex-wrap: nowrap;
-    position: relative;
-    width: 100%;
-    min-height: 50px;
-    padding: 5px ;
+	position: relative;
+	width: 938px;
+	height: auto;
+	min-height: 475px;
+	background: rgb(255, 255, 255, 0.8);
+	margin: auto;
+	margin-top: 50px;
+	border-radius: 15px;
+	box-shadow: 4px 4px 8px gray;
+	font-family: 'Inter';
 
-    &_text{
-      padding: 5px 10px 5px 17px;
-      vertical-align: bottom;
-      text-align: center;
-      color: blue;
-      font-size: 20px;
-    } 
-  }
-  &__discription{
-    display: block;
-    height: 60px;
-    width: 682px;
-    color: gray;
-    margin-left: 25px;
-    margin-top: 45px;
-  }
-  &__body {
-    margin-left: 25px;
-    font-size: 20px;
-    width: 800px;
-    // height: auto;
-    overflow: hidden;
-    // border: 1px solid gray;
-  }
-  &__author {
-    position: absolute;
-    top: 25px;
-    right: 30px;
-  }
+	&__title {
+		display: flex;
+		flex-wrap: nowrap;
+		position: relative;
+		width: 100%;
+		min-height: 50px;
+		padding: 5px;
+
+		&_text {
+			padding: 5px 10px 5px 17px;
+			vertical-align: bottom;
+			text-align: center;
+			color: blue;
+			font-size: 20px;
+		}
+	}
+	&__discription {
+		display: block;
+		height: 60px;
+		width: 682px;
+		color: gray;
+		margin-left: 25px;
+		margin-top: 45px;
+	}
+	&__body {
+		margin-left: 25px;
+		font-size: 20px;
+		width: 800px;
+		// height: auto;
+		overflow: hidden;
+		// border: 1px solid gray;
+	}
+	&__author {
+		position: absolute;
+		top: 25px;
+		right: 30px;
+	}
 }
 
 .likes {
-  display: flex;
-  flex-wrap: nowrap;
-  width: 60px;
-  height: 60px;
-  // margin-top: 10px;
-  margin-left: 25px;
+	display: flex;
+	flex-wrap: nowrap;
+	width: 60px;
+	height: 60px;
+	// margin-top: 10px;
+	margin-left: 25px;
 }
 
 .title__likes {
-  color: red;
-  
-  &_active {
-    color:red;
+	color: red;
 
-  }
-  &_notActive {
-    color: lightgray;
-  }
+	&_active {
+		color: red;
+	}
+	&_notActive {
+		color: lightgray;
+	}
 }
 
 .ul {
-  list-style: none;
-  display: flex;
-  
-  .li {
-    border: 1px solid black;
-        border-radius: 2px;
-        padding: 0  8px;
-        line-height: 18px;
+	list-style: none;
+	display: flex;
 
-        
-        &:hover {
-          border-color: gray;
-          color: gray;
-        }
-        &:not(:first-child) {
-          margin-left: 15px;
-        }
-  }
+	.li {
+		border: 1px solid black;
+		border-radius: 2px;
+		padding: 0 8px;
+		line-height: 18px;
 
+		&:hover {
+			border-color: gray;
+			color: gray;
+		}
+		&:not(:first-child) {
+			margin-left: 15px;
+		}
+	}
 }
 .btns {
-  position: absolute;
-  top: 125px;
-  right: 25px;
+	position: absolute;
+	top: 125px;
+	right: 25px;
 
-  &_btn {
-    border: 1px solid;
-    &:hover {
-      box-shadow: 2px 2px 4px gray;
-      // -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-  }
+	&_btn {
+		border: 1px solid;
+		&:hover {
+			box-shadow: 2px 2px 4px gray;
+			// -webkit-text-fill-color: transparent;
+			background-clip: text;
+		}
+	}
 
-  &__delet {
-    color: red;
-    margin-right: 15px;
-  }
-  &__edit {
-    color: green  }
+	&__delet {
+		color: red;
+		margin-right: 15px;
+	}
+	&__edit {
+		color: green;
+	}
 }
 
 .reactModal {
-  width: 50%;
-  height: 50px;
-  background-color: aqua;
+	width: 50%;
+	height: 50px;
+	background-color: aqua;
 }

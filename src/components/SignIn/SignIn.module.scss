@@ -1,26 +1,26 @@
 .signIN {
-  position: relative;
-  width: 400px;
-  height: 400px;
-  margin: auto;
-  text-align: center;
-  margin-top: 55px;
-  border: 1px solid black;
-  border-radius: 5px;
-  box-shadow: 2px 2px 8px gray;
+	position: relative;
+	width: 400px;
+	height: 400px;
+	margin: auto;
+	text-align: center;
+	margin-top: 55px;
+	border: 1px solid black;
+	border-radius: 5px;
+	box-shadow: 2px 2px 8px gray;
 
-  &__fol {
-    width: 400px;
-    height: 80px;
-  }
-  &__form{
-    position: absolute;
-    top: 30px;
-    left:-15px;
-    margin-top: 155px;
-  }
+	&__fol {
+		width: 400px;
+		height: 80px;
+	}
+	&__form {
+		position: absolute;
+		top: 30px;
+		left: -15px;
+		margin-top: 155px;
+	}
 }
 
 .modal {
-  color: red
+	color: red;
 }

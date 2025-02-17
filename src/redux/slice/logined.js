@@ -30,7 +30,6 @@ const isLogined = createSlice({
 	setUserImage(state, action) {
 		state.userImage = action.payload;
 	},
-	
 });
 
 export const { setIsLogined, setLogOut, setUserData, setUserImage } = isLogined.actions;

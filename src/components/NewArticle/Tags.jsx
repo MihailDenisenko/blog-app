@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,13 +11,12 @@ export default function Tags({ removeTag, index, editTags, text }) {
 	const { tags } = useSelector((state) => state.articles);
 	const dispatch = useDispatch();
 
-
-
 	return (
 		<div style={{ position: 'relative' }}>
-			<div style={{ left: '-500px', display: 'block', justifySelf: 'start', alignSelf: 'start' }}
-			className={styles.div}>
-				
+			<div
+				style={{ left: '-500px', display: 'block', justifySelf: 'start', alignSelf: 'start' }}
+				className={styles.div}
+			>
 				<input
 					onChange={(e) => {
 						dispatch(setTagsOfArticles([index, e.target.value]));

@@ -1,20 +1,17 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import styles from './NavigationPanel.module.scss';
 import userLogo from '../../assets/image/imgeMale.png';
 import logoRW from '../../assets/image/RW.png';
-import petrFirst from '../../assets/image/petrFirst.jpeg';
 import { Link, useNavigate } from 'react-router-dom';
-import { setLogOut, setIsLogined } from '../../redux/slice/logined';
+import { setLogOut } from '../../redux/slice/logined';
 import { useDispatch, useSelector } from 'react-redux';
-
 
 export default function NavigationPanel() {
 	const { isLogined, userNickName, userImage } = useSelector((state) => state.isLogined);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	
-	
-	
+
 	return (
 		<div className={styles.panel}>
 			<div className={styles.panel__title} onClick={() => navigate('/')}>

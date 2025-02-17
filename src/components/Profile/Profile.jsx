@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import styles from './Profile.module.scss';
 import { useNavigate } from 'react-router-dom';
@@ -6,25 +7,23 @@ import { EyeOutlined, EyeInvisibleOutlined, CloseOutlined } from '@ant-design/ic
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUserData, setUserImage } from '../../redux/slice/logined';
-import { da } from 'date-fns/locale';
-
 
 export default function Profile() {
 	const [firstName, setFirstName] = React.useState('');
-	
+
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
 	const [passwordShow, setPasswordShow] = React.useState(true);
 	const [avatarUrl, setAvatarUrl] = React.useState('');
-	
+
 	const [errorAvatar, setErrorAvatar] = React.useState(false);
 	const [firstNameError, setFirstNameError] = React.useState(false);
 	const [errEmail, setErrEmail] = React.useState('');
-	
+
 	const { rootUrl } = useSelector((state) => state.newCount);
 	const { userToken } = useSelector((state) => state.isLogined);
 	const dispatch = useDispatch();
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 	const {
 		register,
 		handleSubmit,
@@ -56,13 +55,13 @@ export default function Profile() {
 				const { data } = resp;
 				dispatch(setUserData(data.user));
 				setTimeout(() => {
-					setFirstName('')
-					setEmail('')
-					setPassword('')
-					setAvatarUrl('')
-					setFirstNameError(false)
-				}, 300)
-				navigate('/articles')
+					setFirstName('');
+					setEmail('');
+					setPassword('');
+					setAvatarUrl('');
+					setFirstNameError(false);
+				}, 300);
+				navigate('/articles');
 			})
 			.catch((er) => {
 				const errors = er.response.data.errors;

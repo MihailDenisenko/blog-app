@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 // import { useDispatch, useSelector } from 'react-redux'
 
 import styles from './App.module.scss';
@@ -19,14 +21,12 @@ import axios from 'axios';
 import { constructFrom } from 'date-fns';
 import ArticleEdit from './components/ArticleEdit/ArticleEdit';
 
-
-
 function App() {
 	const { isLogined } = useSelector((state) => state.isLogined);
-		const { rootUrl } = useSelector((state) => state.newCount);
-	const token = localStorage.getItem('jwt')
-	const dispatch = useDispatch()
-	React.useEffect(() => { 
+	const { rootUrl } = useSelector((state) => state.newCount);
+	const token = localStorage.getItem('jwt');
+	const dispatch = useDispatch();
+	React.useEffect(() => {
 		token !== null
 			? fetch(`${rootUrl}/user`, {
 					method: 'GET',
@@ -34,14 +34,13 @@ function App() {
 						'Content-Type': 'application/json',
 						Authorization: `Bearer ${token}`,
 					},
-			}).then((resp) => resp.json()).then(json => {
-				dispatch(setUserData(json.user))
-
 				})
+					.then((resp) => resp.json())
+					.then((json) => {
+						dispatch(setUserData(json.user));
+					})
 			: '';
-	}, [])
-	
-	
+	}, []);
 
 	return (
 		<>

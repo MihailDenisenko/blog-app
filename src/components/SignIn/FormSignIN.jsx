@@ -1,11 +1,10 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { Button, Checkbox, Form, Input, Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserData, setIsLogined } from '../../redux/slice/logined';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './SignIn.module.scss';
-
-
 
 const App = () => {
 	const { rootUrl } = useSelector((state) => state.newCount);
@@ -14,26 +13,26 @@ const App = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-
-
 	const onFinish = (values) => {
-		const {password, email} = values
+		const { password, email } = values;
 		fetch(`${rootUrl}/users/login`, {
 			method: 'POST',
 			headers: {
-				'Content-Type': "application/json",
+				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ user:{password, email}})
-		}).then(resp => resp.json()).then(json => {
-			if (json?.errors) {
-				const {errors} = json
-				setIsModalOpen(true)
-			} else {
-				localStorage.setItem('jwt', json.user.token);
-				dispatch(setUserData(json.user))
-				navigate('/articles')
-			}
+			body: JSON.stringify({ user: { password, email } }),
 		})
+			.then((resp) => resp.json())
+			.then((json) => {
+				if (json?.errors) {
+					const { errors } = json;
+					setIsModalOpen(true);
+				} else {
+					localStorage.setItem('jwt', json.user.token);
+					dispatch(setUserData(json.user));
+					navigate('/articles');
+				}
+			});
 	};
 	const onFinishFailed = (errorInfo) => {
 		setIsModalOpen(true);
