@@ -6,22 +6,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import Post from '../Post/Post';
 import styles from './Posts.module.scss';
 import PaginPage from '../Pagination/PaginPage';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { setArticlesCount } from '../../redux/slice/articles';
 
 export default function Posts() {
 	const { rootUrl } = useSelector((state) => state.newCount);
 	const dispatch = useDispatch();
 	const [blogs, setBlogs] = React.useState([]);
-	const { articlePage } = useSelector((state) => state.articles);
+	// const { articlePage } = useSelector((state) => state.articles);
 	const navigate = useNavigate();
 	const [start, setStart] = React.useState(true);
 	const [token, setToken] = React.useState('');
+	const [page, setPage] = React.useState(1);
+	const [articlePage, setArticlePage] = React.useState(1);
 
 	React.useEffect(() => {
+		localStorage.getItem('page') !== null ? setArticlePage(Number(localStorage.getItem('page'))) : '';
+
 		if (localStorage.getItem('jwt') !== null) {
 			setToken(localStorage.getItem('jwt'));
 		}
+		
 		fetch(`https://blog-platform.kata.academy/api/articles?limit=5&offset=${(articlePage - 1) * 5}`, {
 			method: 'GET',
 			headers: {
@@ -32,16 +37,14 @@ export default function Posts() {
 			.then((resp) => resp.json())
 			.then((json) => {
 				const counts = json.articles;
-				console.log(json.articles);
-				// counts.map((c) => console.log(c.favoritesCount));
 				dispatch(setArticlesCount(json.articlesCount));
 				setBlogs(json.articles);
-			});
+			})
+			.catch((e) => console.log(e));
 	}, []);
 
 	React.useEffect(() => {
 		if (start !== true) {
-			
 			axios
 				.get(`${rootUrl}/articles?limit=5&offset=${(articlePage - 1) * 5}`, {
 					method: 'GET',
@@ -51,11 +54,11 @@ export default function Posts() {
 					},
 				})
 				.then((resp) => {
-					navigate(`/articles/?offset=${(articlePage) }`);
-					console.log(resp.data.articles);
+					navigate(`/articles/?offset=${articlePage}`);
 					setBlogs(resp.data.articles);
 					dispatch(setArticlesCount(resp.data.articlesCount));
-				});
+				})
+				.catch((e) => console.log(e));
 		}
 		setStart(false);
 	}, [articlePage, token]);
@@ -82,7 +85,7 @@ export default function Posts() {
 	return (
 		<div>
 			<ul className={styles.ul}>{post}</ul>
-			{blogs.length === 0 ? '' : <PaginPage />}
+			{blogs.length === 0 ? '' : <PaginPage setArticlePage={setArticlePage} />}
 		</div>
 	);
 }

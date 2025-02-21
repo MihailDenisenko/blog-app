@@ -18,6 +18,11 @@ export default function NewArticle() {
 	const [title, setTitle] = React.useState('');
 	const [short, setShort] = React.useState('');
 	const [tagsNum, setTagsNum] = React.useState(1);
+
+	const [titleErr, setTitleErr] = React.useState(false)
+	const [shortErr, setShortErr] = React.useState(false);
+	const [textErr, setTextErr] = React.useState(false);
+
 	const slugi = slug(title, { delimiter: '-' });
 	const { tags } = useSelector((state) => state.articles);
 	const navigate = useNavigate();
@@ -43,7 +48,25 @@ export default function NewArticle() {
 	async function onSubmit(data) {
 		const token = localStorage.getItem('jwt');
 		const articlec = {};
-		const { title, shortDescription, text } = data;
+		let  { title, shortDescription, text } = data;
+
+		title = title.trim()
+		shortDescription = shortDescription.trim();
+		text = text.trim();
+
+		if (title.trim() === '' || shortDescription.trim() === '' || text.trim() === '') {
+			console.log(title)
+			if (title.trim() === '') { setTitleErr(true)}
+			if (shortDescription.trim() === '') {
+				setShortErr(true);
+			}
+			if (text.trim() === '') {
+				setTextErr(true);
+			}
+			return
+		}
+
+
 		if ((tags.length > 1 && tags.length !== 0) || tags[0] !== '') articlec.tags = tags;
 		articlec.title = title;
 		const description = shortDescription;
@@ -97,6 +120,7 @@ export default function NewArticle() {
 						value={title}
 					/>
 					{errors?.title && <p className={styles.p_err}>{errors.title.message}</p>}
+					{titleErr ? <p className={styles.p_err}>Нельзя указывать только пробелы</p> : ''}
 				</label>
 				{/* Описание */}
 				<label>
@@ -109,6 +133,7 @@ export default function NewArticle() {
 						value={short}
 					/>
 					{errors?.shortDescription && <p className={styles.p_err}>{errors.shortDescription.message}</p>}
+					{shortErr ? <p className={styles.p_err}>Нельзя указывать только пробелы</p> : ''}
 				</label>
 				{/* Текст */}
 				<label>
@@ -117,6 +142,7 @@ export default function NewArticle() {
 						placeholder='Укажите Текст для вашего блога в формате Markdown'
 						{...register('text', { required: 'Текст обязятелен' })}
 					/>
+					{textErr ? <p className={styles.p_err}>Нельзя указывать только пробелы</p> : ''}
 					{errors?.text && <p className={styles.p_err}>{errors.text.message}</p>}
 				</label>
 				{/* Тэги */}

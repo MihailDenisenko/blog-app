@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { setArticle } from '../../redux/slice/articles';
 import Markdown from 'react-markdown';
 import { toFavorite } from '../Favorites/Favorite';
+import Logo from "../../assets/image/petrFirst.jpeg"
 
 export default function Post({
 	slug,
@@ -25,7 +26,7 @@ export default function Post({
 	const [isLoged, setIsLoget] = React.useState(false);
 	const { isLogined } = useSelector((state) => state.isLogined);
 	const [countFavor, setCountFavor] = React.useState(favoritesCount);
-
+	const [imgErr, setImgErr] = React.useState(false)
 
 	const [favori, setFavori] = React.useState(favorited)
 // console.log(favori, favorited)
@@ -43,6 +44,11 @@ export default function Post({
 		);
 	});
 	
+
+	const evTar = (evnt) => { 
+		console.log(evnt)
+	}
+
 	const goToArticle = () => {
 		dispatch(setArticle(slug));
 		naigate(`/articles/${slug}`);
@@ -126,7 +132,8 @@ export default function Post({
 					<div className={styles.rightSize__date}>{format(createdAt, 'ii LLL yyy')}</div>
 
 					<div className={styles.rightSize__logo}>
-						<img className={styles.rightSize__logo} src={image} alt={username} />
+						<img className={styles.rightSize__logo} src={!imgErr?image:Logo} onError={()=>setImgErr(true)} alt={username} />
+						
 					</div>
 					<div className={styles.rightSize__date}></div>
 				</div>

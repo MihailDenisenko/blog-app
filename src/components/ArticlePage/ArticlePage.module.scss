@@ -58,16 +58,21 @@
 	height: 60px;
 	// margin-top: 10px;
 	margin-left: 25px;
+	margin-top: -10px;
 }
 
 .title__likes {
 	color: red;
-
+	
 	&_active {
 		color: red;
 	}
 	&_notActive {
 		color: lightgray;
+	}
+	&_favorites {
+		margin-top: 18px;
+		margin-left: 10px;
 	}
 }
 

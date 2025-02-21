@@ -1,16 +1,21 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
 import styles from './PaginPage.module.scss';
 import { Pagination } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { setArticlePage } from '../../redux/slice/articles';
+// import { setArticlePage } from '../../redux/slice/articles';
 import { useLocation } from 'react-router-dom';
 
-export default function PaginPage() {
+export default function PaginPage({setArticlePage}) {
 	const { articlesCount } = useSelector((state) => state.articles);
 	const dispatch = useDispatch();
-	const hhh = (page) => dispatch(setArticlePage(page));
+	const hhh = (page) => {
+		// dispatch(setArticlePage(page))
+		localStorage.setItem('page', page);
+		setArticlePage(page)
+	};
 
 	const total = articlesCount / 10;
 

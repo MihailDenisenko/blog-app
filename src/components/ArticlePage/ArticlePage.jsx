@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './ArticlePage.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { setArticle } from '../../redux/slice/articles';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import Markdown from 'react-markdown';
@@ -29,6 +29,7 @@ export default function ArticlePage() {
 	const [isEditor, setIsEditor] = React.useState(false);
 	const [modalShow, setModalShow] = React.useState(false);
 	const [slug, setSlug] = React.useState('');
+	const [errorArticle, setErrorArticle] = React.useState(false);
 
 	const [onFavor, setOnFavor] = React.useState(false);
 
@@ -53,10 +54,9 @@ export default function ArticlePage() {
 		}
 		setHeartOn(!heartOn);
 	}
-	
 
 	React.useEffect(() => {
-		const token = localStorage.getItem('jwt')
+		const token = localStorage.getItem('jwt');
 		article !== null
 			? axios
 					.get(rootUrl + `/articles/${article}`, {
@@ -84,9 +84,9 @@ export default function ArticlePage() {
 						setFavoritesCount(favoritesCount);
 						setAuthor(author);
 						setOnFavor(favorited);
-						console.log(favorited);
 						setSlug(slug);
 					})
+					.catch((e) => setErrorArticle(true))
 			: '';
 	}, [article, userNickName]);
 
@@ -117,7 +117,8 @@ export default function ArticlePage() {
 			})
 			.catch((e) => console.log(e));
 	}
-	return (
+
+	return !errorArticle ? (
 		<div className={styles.ArticlePage}>
 			<div className={styles.card}>
 				<div className={styles.card__title}>
@@ -190,6 +191,15 @@ export default function ArticlePage() {
 					''
 				)}
 			</div>
+		</div>
+	) : (
+		<div style={{ textAlign: 'center', marginTop: '45px', color: 'brown' }}>
+			<h2>К сожалению по этому запросу ничего нет</h2>
+
+			<h2 style={{ marginTop: '50px' }}>Попробуйте сделать другой запрос</h2>
+			<h2 style={{ marginTop: '50px' }}>
+				или нажмите <Link to='/articles/'>сюда</Link>
+			</h2>
 		</div>
 	);
 }
