@@ -21,12 +21,15 @@ export default function Posts() {
 	const [articlePage, setArticlePage] = React.useState(1);
 
 	React.useEffect(() => {
-		localStorage.getItem('page') !== null ? setArticlePage(Number(localStorage.getItem('page'))) : '';
-
+		if (localStorage.getItem('page') !== null) {
+			setArticlePage(Number(localStorage.getItem('page')))
+		};
+		
 		if (localStorage.getItem('jwt') !== null) {
 			setToken(localStorage.getItem('jwt'));
+			return
 		}
-		
+
 		fetch(`https://blog-platform.kata.academy/api/articles?limit=5&offset=${(articlePage - 1) * 5}`, {
 			method: 'GET',
 			headers: {

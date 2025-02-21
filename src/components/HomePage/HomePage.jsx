@@ -14,7 +14,10 @@ export default function HomePage() {
 	return (
 		<div className={styles.HomePage}>
 			<div className={styles.HomePage__posts}>
-				<Button className={styles.HomePage__btn} onClick={() => navigate('/articles')}>
+				<Button className={styles.HomePage__btn} onClick={() => {
+					if (localStorage.getItem('page')!==null) localStorage.setItem('page', 1) 
+					navigate('/articles/')
+				}}>
 					Посмотреть посты
 				</Button>
 			</div>
